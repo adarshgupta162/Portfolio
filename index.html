@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Adarsh Gupta | Portfolio</title>
+
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <!-- Google Font -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Poppins", sans-serif;
+            background: #11151d;
+            color: white;
+        }
+
+        /* Main container */
+
+        .container {
+            width: 87%;
+            max-width: 1350px;
+            min-height: 90vh;
+            margin: 5vh auto;
+            padding: 0 7%;
+            border-radius: 35px;
+            background: #1d222c;
+
+            box-shadow:
+                0 30px 70px rgba(0, 0, 0, 0.5),
+                0 40px 100px rgba(0, 238, 255, 0.18);
+
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Cyan glow at bottom */
+
+        .container::after {
+            content: "";
+            position: absolute;
+            width: 600px;
+            height: 250px;
+            bottom: -180px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #00eaff;
+            filter: blur(100px);
+            opacity: 0.65;
+            pointer-events: none;
+        }
+
+        /* Navbar */
+
+        header {
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        nav {
+            display: flex;
+            gap: 40px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        nav a:hover,
+        nav a.active {
+            color: #00eaff;
+        }
+
+        /* Hero */
+
+        .hero {
+            min-height: calc(90vh - 100px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 60px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-text {
+            width: 55%;
+        }
+
+        .hero-text h3 {
+            font-size: 30px;
+            margin-bottom: 5px;
+        }
+
+        .hero-text h1 {
+            font-size: clamp(45px, 5vw, 65px);
+            line-height: 1.1;
+            margin-bottom: 12px;
+        }
+
+        .hero-text h2 {
+            font-size: 28px;
+            margin-bottom: 25px;
+        }
+
+        .cyan {
+            color: #00eaff;
+        }
+
+        .hero-text p {
+            max-width: 600px;
+            color: #d1d1d1;
+            font-size: 15px;
+            line-height: 1.7;
+            margin-bottom: 28px;
+        }
+
+        /* Social icons */
+
+        .social {
+            display: flex;
+            gap: 18px;
+            margin-bottom: 30px;
+        }
+
+        .social a {
+            width: 42px;
+            height: 42px;
+            border: 2px solid #00eaff;
+            border-radius: 50%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            color: #00eaff;
+            text-decoration: none;
+            font-size: 18px;
+
+            transition: 0.3s;
+        }
+
+        .social a:hover {
+            background: #00eaff;
+            color: #11151d;
+            box-shadow: 0 0 20px #00eaff;
+            transform: translateY(-4px);
+        }
+
+        /* Button */
+
+        .cv-btn {
+            display: inline-block;
+            padding: 14px 28px;
+
+            border-radius: 30px;
+            background: #00eaff;
+
+            color: #11151d;
+            text-decoration: none;
+
+            font-weight: 600;
+            font-size: 15px;
+
+            box-shadow: 0 0 20px rgba(0, 234, 255, 0.6);
+
+            transition: 0.3s;
+        }
+
+        .cv-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 35px rgba(0, 234, 255, 0.9);
+        }
+
+        /* Profile */
+
+        .hero-image {
+            width: 42%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hexagon {
+            width: 380px;
+            height: 430px;
+
+            background: #00eaff;
+
+            clip-path: polygon(
+                25% 6%,
+                75% 6%,
+                100% 25%,
+                100% 75%,
+                75% 94%,
+                25% 94%,
+                0 75%,
+                0 25%
+            );
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            filter:
+                drop-shadow(0 0 15px #00eaff)
+                drop-shadow(0 0 35px #00eaff);
+
+            position: relative;
+        }
+
+        .hexagon::before {
+            content: "";
+            position: absolute;
+            inset: 7px;
+
+            background: #1d222c;
+
+            clip-path: inherit;
+        }
+
+        .hexagon img {
+            width: 95%;
+            height: 95%;
+
+            object-fit: cover;
+
+            position: relative;
+            z-index: 2;
+
+            clip-path: polygon(
+                25% 6%,
+                75% 6%,
+                100% 25%,
+                100% 75%,
+                75% 94%,
+                25% 94%,
+                0 75%,
+                0 25%
+            );
+        }
+
+        /* Mobile */
+
+        @media (max-width: 900px) {
+
+            .container {
+                width: 94%;
+                padding: 0 6%;
+                margin: 3vh auto;
+            }
+
+            header {
+                height: 80px;
+            }
+
+            nav {
+                gap: 15px;
+            }
+
+            nav a {
+                font-size: 13px;
+            }
+
+            .hero {
+                flex-direction: column-reverse;
+                justify-content: center;
+                text-align: center;
+                padding: 40px 0;
+            }
+
+            .hero-text {
+                width: 100%;
+            }
+
+            .hero-image {
+                width: 100%;
+            }
+
+            .hexagon {
+                width: 280px;
+                height: 320px;
+            }
+
+            .social {
+                justify-content: center;
+            }
+
+            .hero-text h3 {
+                font-size: 24px;
+            }
+
+            .hero-text h2 {
+                font-size: 22px;
+            }
+        }
+
+        @media (max-width: 550px) {
+
+            .container {
+                min-height: 94vh;
+                border-radius: 25px;
+            }
+
+            .logo {
+                font-size: 20px;
+            }
+
+            nav {
+                display: none;
+            }
+
+            .hero {
+                min-height: calc(94vh - 80px);
+            }
+
+            .hexagon {
+                width: 230px;
+                height: 270px;
+            }
+
+            .hero-text h1 {
+                font-size: 40px;
+            }
+
+            .hero-text h3 {
+                font-size: 20px;
+            }
+
+            .hero-text h2 {
+                font-size: 19px;
+            }
+
+            .hero-text p {
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- NAVBAR -->
+
+        <header>
+            <div class="logo">
+                Portfolio.
+            </div>
+
+            <nav>
+                <a href="#" class="active">Home</a>
+                <a href="#about">About</a>
+                <a href="#skills">Skills</a>
+                <a href="#portfolio">Portfolio</a>
+                <a href="#contact">Contact</a>
+            </nav>
+        </header>
+
+
+        <!-- HERO -->
+
+        <section class="hero">
+
+            <div class="hero-text">
+
+                <h3>Hello, It's Me</h3>
+
+                <h1>Adarsh Gupta</h1>
+
+                <h2>
+                    And I'm a
+                    <span class="cyan">Full Stack Developer</span>
+                </h2>
+
+                <p>
+                    I build modern web applications, AI-powered tools,
+                    and scalable digital products. Currently focused on
+                    web development, DSA and AI/ML.
+                </p>
+
+
+                <!-- SOCIAL -->
+
+                <div class="social">
+
+                    <a href="#" target="_blank">
+                        <i class="fa-brands fa-github"></i>
+                    </a>
+
+                    <a href="#" target="_blank">
+                        <i class="fa-brands fa-linkedin-in"></i>
+                    </a>
+
+                    <a href="#" target="_blank">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+
+                    <a href="#" target="_blank">
+                        <i class="fa-brands fa-x-twitter"></i>
+                    </a>
+
+                </div>
+
+
+                <!-- CV -->
+
+                <a href="resume.pdf" class="cv-btn" download>
+                    Download CV
+                </a>
+
+            </div>
+
+
+            <!-- PROFILE IMAGE -->
+
+            <div class="hero-image">
+
+                <div class="hexagon">
+
+                    <img
+                        src="profile.png"
+                        alt="Adarsh Gupta"
+                    >
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </div>
+
+</body>
+</html>

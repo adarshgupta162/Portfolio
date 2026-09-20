@@ -1,464 +1,391 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Adarsh Gupta | Portfolio</title>
-
-    <!-- Font Awesome -->
-    <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-    >
-
-    <!-- Google Font -->
-    <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet"
-    >
-
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: "Poppins", sans-serif;
-            background: #11151d;
-            color: white;
-        }
-
-        /* Main container */
-
-        .container {
-            width: 87%;
-            max-width: 1350px;
-            min-height: 90vh;
-            margin: 5vh auto;
-            padding: 0 7%;
-            border-radius: 35px;
-            background: #1d222c;
-
-            box-shadow:
-                0 30px 70px rgba(0, 0, 0, 0.5),
-                0 40px 100px rgba(0, 238, 255, 0.18);
-
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* Cyan glow at bottom */
-
-        .container::after {
-            content: "";
-            position: absolute;
-            width: 600px;
-            height: 250px;
-            bottom: -180px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #00eaff;
-            filter: blur(100px);
-            opacity: 0.65;
-            pointer-events: none;
-        }
-
-        /* Navbar */
-
-        header {
-            height: 100px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .logo {
-            font-size: 24px;
-            font-weight: 700;
-        }
-
-        nav {
-            display: flex;
-            gap: 40px;
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            font-size: 16px;
-            font-weight: 500;
-            transition: 0.3s;
-        }
-
-        nav a:hover,
-        nav a.active {
-            color: #00eaff;
-        }
-
-        /* Hero */
-
-        .hero {
-            min-height: calc(90vh - 100px);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 60px;
-            position: relative;
-            z-index: 2;
-        }
-
-        .hero-text {
-            width: 55%;
-        }
-
-        .hero-text h3 {
-            font-size: 30px;
-            margin-bottom: 5px;
-        }
-
-        .hero-text h1 {
-            font-size: clamp(45px, 5vw, 65px);
-            line-height: 1.1;
-            margin-bottom: 12px;
-        }
-
-        .hero-text h2 {
-            font-size: 28px;
-            margin-bottom: 25px;
-        }
-
-        .cyan {
-            color: #00eaff;
-        }
-
-        .hero-text p {
-            max-width: 600px;
-            color: #d1d1d1;
-            font-size: 15px;
-            line-height: 1.7;
-            margin-bottom: 28px;
-        }
-
-        /* Social icons */
-
-        .social {
-            display: flex;
-            gap: 18px;
-            margin-bottom: 30px;
-        }
-
-        .social a {
-            width: 42px;
-            height: 42px;
-            border: 2px solid #00eaff;
-            border-radius: 50%;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            color: #00eaff;
-            text-decoration: none;
-            font-size: 18px;
-
-            transition: 0.3s;
-        }
-
-        .social a:hover {
-            background: #00eaff;
-            color: #11151d;
-            box-shadow: 0 0 20px #00eaff;
-            transform: translateY(-4px);
-        }
-
-        /* Button */
-
-        .cv-btn {
-            display: inline-block;
-            padding: 14px 28px;
-
-            border-radius: 30px;
-            background: #00eaff;
-
-            color: #11151d;
-            text-decoration: none;
-
-            font-weight: 600;
-            font-size: 15px;
-
-            box-shadow: 0 0 20px rgba(0, 234, 255, 0.6);
-
-            transition: 0.3s;
-        }
-
-        .cv-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 0 35px rgba(0, 234, 255, 0.9);
-        }
-
-        /* Profile */
-
-        .hero-image {
-            width: 42%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .hexagon {
-            width: 380px;
-            height: 430px;
-
-            background: #00eaff;
-
-            clip-path: polygon(
-                25% 6%,
-                75% 6%,
-                100% 25%,
-                100% 75%,
-                75% 94%,
-                25% 94%,
-                0 75%,
-                0 25%
-            );
-
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            filter:
-                drop-shadow(0 0 15px #00eaff)
-                drop-shadow(0 0 35px #00eaff);
-
-            position: relative;
-        }
-
-        .hexagon::before {
-            content: "";
-            position: absolute;
-            inset: 7px;
-
-            background: #1d222c;
-
-            clip-path: inherit;
-        }
-
-        .hexagon img {
-            width: 95%;
-            height: 95%;
-
-            object-fit: cover;
-
-            position: relative;
-            z-index: 2;
-
-            clip-path: polygon(
-                25% 6%,
-                75% 6%,
-                100% 25%,
-                100% 75%,
-                75% 94%,
-                25% 94%,
-                0 75%,
-                0 25%
-            );
-        }
-
-        /* Mobile */
-
-        @media (max-width: 900px) {
-
-            .container {
-                width: 94%;
-                padding: 0 6%;
-                margin: 3vh auto;
-            }
-
-            header {
-                height: 80px;
-            }
-
-            nav {
-                gap: 15px;
-            }
-
-            nav a {
-                font-size: 13px;
-            }
-
-            .hero {
-                flex-direction: column-reverse;
-                justify-content: center;
-                text-align: center;
-                padding: 40px 0;
-            }
-
-            .hero-text {
-                width: 100%;
-            }
-
-            .hero-image {
-                width: 100%;
-            }
-
-            .hexagon {
-                width: 280px;
-                height: 320px;
-            }
-
-            .social {
-                justify-content: center;
-            }
-
-            .hero-text h3 {
-                font-size: 24px;
-            }
-
-            .hero-text h2 {
-                font-size: 22px;
-            }
-        }
-
-        @media (max-width: 550px) {
-
-            .container {
-                min-height: 94vh;
-                border-radius: 25px;
-            }
-
-            .logo {
-                font-size: 20px;
-            }
-
-            nav {
-                display: none;
-            }
-
-            .hero {
-                min-height: calc(94vh - 80px);
-            }
-
-            .hexagon {
-                width: 230px;
-                height: 270px;
-            }
-
-            .hero-text h1 {
-                font-size: 40px;
-            }
-
-            .hero-text h3 {
-                font-size: 20px;
-            }
-
-            .hero-text h2 {
-                font-size: 19px;
-            }
-
-            .hero-text p {
-                font-size: 13px;
-            }
-        }
-    </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Adarsh Gupta | Software developer and SaaS builder</title>
+<meta name="description" content="Adarsh Gupta is a Computer Software Engineering student at IIEST Shibpur who builds SaaS products with React, TypeScript and Supabase.">
+<meta property="og:title" content="Adarsh Gupta | Software developer and SaaS builder">
+<meta property="og:description" content="Exam platforms, field-sales software and campus tools, built with React, TypeScript and Supabase.">
+<meta name="theme-color" content="#EDF1F4">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #EDF1F4;
+    --paper-2: #F8FAFB;
+    --ink: #12264A;
+    --muted: #43566A;
+    --rule: #C3CFD9;
+    --grid: #DCE4EA;
+    --marigold: #F2A900;
+    --ganga: #14606F;
+    --display: 'Bricolage Grotesque', 'Helvetica Neue', Arial, sans-serif;
+    --body: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+  body {
+    margin: 0;
+    background-color: var(--paper);
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 32px 32px;
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 1.125rem;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: var(--ganga); text-underline-offset: 0.2em; text-decoration-thickness: 1px; }
+  a:hover { text-decoration-thickness: 2px; }
+  :focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+
+  .skip {
+    position: absolute; left: 12px; top: -60px; z-index: 10;
+    background: var(--ink); color: var(--paper); padding: 10px 16px; font-family: var(--display);
+  }
+  .skip:focus { top: 12px; }
+
+  .wrap { max-width: 1280px; margin: 0 auto; padding-inline: clamp(20px, 5vw, 48px); }
+
+  /* Header */
+  .top { display: flex; justify-content: space-between; align-items: baseline; gap: 24px; padding-block: 22px; flex-wrap: wrap; }
+  .top .mark { font-family: var(--display); font-weight: 700; font-size: 1.05rem; color: var(--ink); text-decoration: none; }
+  .top nav { display: flex; gap: clamp(14px, 3vw, 30px); flex-wrap: wrap; }
+  .top nav a { font-family: var(--display); font-weight: 500; font-size: 1rem; color: var(--ink); text-decoration: none; padding-block: 4px; border-bottom: 2px solid transparent; }
+  .top nav a:hover { border-bottom-color: var(--marigold); }
+
+  /* Hero */
+  .hero { padding-block: clamp(40px, 9vw, 110px) clamp(56px, 9vw, 120px); }
+  h1 {
+    margin: 0; font-family: var(--display); font-weight: 800;
+    font-size: clamp(3.6rem, 14.5vw, 10.5rem); line-height: 0.9; letter-spacing: -0.04em;
+  }
+  h1 .line { display: block; overflow: hidden; padding-bottom: 0.06em; }
+  h1 .line span { display: block; animation: rise 0.9s cubic-bezier(.2,.8,.2,1) both; }
+  h1 .line:nth-child(2) span { animation-delay: 0.12s; }
+  @keyframes rise { from { transform: translateY(105%); } to { transform: none; } }
+  @media (prefers-reduced-motion: reduce) { h1 .line span { animation: none; } }
+
+  .lede { max-width: 34ch; margin: clamp(28px, 4vw, 44px) 0 0; font-family: var(--display); font-weight: 500; font-size: clamp(1.5rem, 3.4vw, 2.2rem); line-height: 1.2; letter-spacing: -0.01em; }
+  .sub { max-width: 60ch; margin: 20px 0 0; color: var(--muted); }
+  .actions { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 32px; }
+  .btn { font-family: var(--display); font-weight: 600; font-size: 1rem; padding: 12px 22px; text-decoration: none; border: 2px solid var(--ink); }
+  .btn.solid { background: var(--ink); color: var(--paper); }
+  .btn.solid:hover { background: var(--marigold); color: var(--ink); border-color: var(--ink); }
+  .btn.line { background: transparent; color: var(--ink); }
+  .btn.line:hover { background: var(--paper-2); }
+
+  /* Sections */
+  .sec { display: grid; grid-template-columns: 160px minmax(0, 1fr); gap: clamp(24px, 3.5vw, 48px); padding-block: clamp(48px, 7vw, 88px); border-top: 2px solid var(--ink); }
+  h2 { margin: 0; font-family: var(--display); font-weight: 700; font-size: 1.6rem; line-height: 1.15; letter-spacing: -0.01em; }
+  @media (max-width: 820px) { .sec { grid-template-columns: 1fr; gap: 20px; } }
+
+  /* Projects */
+  .proj + .proj { margin-top: clamp(40px, 6vw, 72px); padding-top: clamp(40px, 6vw, 72px); border-top: 1px solid var(--rule); }
+  .proj-head h3 { margin: 0; font-family: var(--display); font-weight: 800; font-size: clamp(2rem, 4.5vw, 3rem); line-height: 1; letter-spacing: -0.03em; }
+  .proj-head p { margin: 8px 0 0; font-family: var(--display); font-weight: 500; color: var(--muted); font-size: 1.05rem; }
+  .proj-body { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 400px); gap: clamp(28px, 3.5vw, 44px); margin-top: 28px; align-items: start; }
+  @media (max-width: 1100px) { .proj-body { grid-template-columns: 1fr; } .map { max-width: 480px; } }
+  .proj-body p { margin: 0 0 1em; max-width: 60ch; }
+  .proj-body ul.points { margin: 0 0 1.2em; padding-left: 1.1em; max-width: 60ch; }
+  .proj-body ul.points li { margin-bottom: 0.6em; padding-left: 0.2em; }
+  .stack { font-size: 0.98rem; color: var(--muted); margin: 0; }
+  .stack b { font-family: var(--display); font-weight: 600; color: var(--ink); }
+
+  /* Module maps */
+  .map { margin: 0; background: var(--paper-2); border: 2px solid var(--ink); padding: 18px 18px 14px; }
+  .map svg { display: block; width: 100%; height: auto; overflow: visible; }
+  .map .link { fill: none; stroke: var(--ink); stroke-width: 1.5; }
+  .map .core rect { fill: var(--ink); }
+  .map .core text { fill: var(--paper); font-family: var(--display); }
+  .map .mod { cursor: pointer; }
+  .map .mod rect { fill: var(--paper-2); stroke: var(--ink); stroke-width: 1.5; }
+  .map .mod text { fill: var(--ink); font-family: var(--display); font-weight: 500; font-size: 14px; pointer-events: none; }
+  .map .mod:hover rect { fill: #FFF1CC; }
+  .map .mod[aria-pressed="true"] rect { fill: var(--marigold); }
+  .map .mod:focus-visible { outline: none; }
+  .map .mod:focus-visible rect { stroke-width: 4; }
+  .map-note { margin: 14px 0 0; padding-top: 12px; border-top: 1px solid var(--rule); font-size: 0.98rem; line-height: 1.5; min-height: 4.6em; }
+  .map-note b { font-family: var(--display); font-weight: 700; }
+  .map-list { margin: 0; padding-left: 1.1em; font-size: 0.98rem; }
+  .map.enhanced .map-list { display: none; }
+
+  /* About */
+  .about p { margin: 0 0 1em; max-width: 60ch; }
+  dl.facts { margin: 32px 0 0; display: grid; grid-template-columns: minmax(120px, 170px) minmax(0, 1fr); gap: 14px 24px; }
+  dl.facts dt { font-family: var(--display); font-weight: 700; }
+  dl.facts dd { margin: 0; }
+  @media (max-width: 560px) { dl.facts { grid-template-columns: 1fr; gap: 2px; } dl.facts dd { margin-bottom: 14px; } }
+
+  /* Learning + Education */
+  .rows { list-style: none; margin: 0; padding: 0; }
+  .rows li { display: grid; grid-template-columns: minmax(150px, 230px) minmax(0, 1fr); gap: 8px 28px; padding-block: 18px; border-bottom: 1px solid var(--rule); }
+  .rows li:first-child { padding-top: 0; }
+  .rows li:last-child { border-bottom: 0; padding-bottom: 0; }
+  .rows h3 { margin: 0; font-family: var(--display); font-weight: 700; font-size: 1.1rem; line-height: 1.3; }
+  .rows p { margin: 0; max-width: 60ch; }
+  .rows .when { display: block; font-family: var(--display); font-weight: 500; color: var(--muted); font-size: 0.98rem; }
+  @media (max-width: 640px) { .rows li { grid-template-columns: 1fr; } }
+  .edu-block + .edu-block { margin-top: 0; }
+
+  /* Contact */
+  .contact p { margin: 0 0 28px; max-width: 50ch; }
+  .contact ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+  .contact a { font-family: var(--display); font-weight: 700; font-size: clamp(1.6rem, 4.6vw, 2.8rem); letter-spacing: -0.02em; line-height: 1.15; color: var(--ink); text-decoration-color: var(--marigold); text-decoration-thickness: 4px; text-underline-offset: 0.16em; overflow-wrap: anywhere; }
+  .contact a:hover { color: var(--ganga); }
+
+  footer { border-top: 2px solid var(--ink); padding-block: 26px 48px; color: var(--muted); font-size: 0.95rem; }
+</style>
 </head>
-
 <body>
+<a class="skip" href="#main">Skip to content</a>
 
-    <div class="container">
+<div class="wrap">
+  <header class="top">
+    <a class="mark" href="#top">Adarsh Gupta</a>
+    <nav aria-label="Primary">
+      <a href="#projects">Projects</a>
+      <a href="#about">About</a>
+      <a href="#learning">Learning</a>
+      <a href="#campus">Campus</a>
+      <a href="#contact">Contact</a>
+      <a href="Adarsh_Gupta_Resume.pdf">Resume</a>
+    </nav>
+  </header>
 
-        <!-- NAVBAR -->
+  <main id="main">
+    <section class="hero" id="top">
+      <h1 aria-label="Adarsh Gupta">
+        <span class="line" aria-hidden="true"><span>Adarsh</span></span>
+        <span class="line" aria-hidden="true"><span>Gupta</span></span>
+      </h1>
+      <p class="lede">I build SaaS products, from exam platforms to field-sales software.</p>
+      <p class="sub">First-year Computer Software Engineering student at IIEST Shibpur, from Varanasi. I build with React, TypeScript and Supabase, using AI-assisted tools like Lovable, and I'm learning C++, data structures and backend engineering to go deeper. Off the screen: a camera, a gym and a game.</p>
+      <div class="actions">
+        <a class="btn solid" href="#projects">See my projects</a>
+        <a class="btn line" href="Adarsh_Gupta_Resume.pdf">Download resume (PDF)</a>
+      </div>
+    </section>
 
-        <header>
-            <div class="logo">
-                Portfolio.
+    <section class="sec" id="projects" aria-labelledby="h-projects">
+      <h2 id="h-projects">Projects</h2>
+      <div>
+
+        <article class="proj">
+          <header class="proj-head">
+            <h3>PhyNetix</h3>
+            <p>JEE test-series platform, being built for the JEE Main 2027 cycle</p>
+          </header>
+          <div class="proj-body">
+            <div>
+              <p>Students take computer-based tests that look and behave like the real NTA exam, then review how they did. I'm building the test interface, the question bank and the admin tools behind it.</p>
+              <ul class="points">
+                <li>The test screen follows the real JEE Main layout, including the question palette shapes, colours and section tabs.</li>
+                <li>Questions arrive through Excel import templates. I convert LaTeX sources into the template columns with Python (openpyxl, pandas) and check each file before import.</li>
+                <li>I also explored exam proctoring with camera, microphone and screen-share monitoring, and prototyped a dedicated admin panel.</li>
+              </ul>
+              <p class="stack"><b>Stack:</b> React, TypeScript, Vite, Tailwind CSS, shadcn/ui, Supabase</p>
             </div>
+            <figure class="map" data-core="Supabase" data-sub="React + TypeScript" aria-label="Module map for PhyNetix">
+              <ul class="map-list">
+                <li data-name="Test interface">Computer-based test screen modelled on the real NTA JEE Main layout, with the question palette and section tabs.</li>
+                <li data-name="Question bank">Questions are bulk-imported from Excel templates covering Physics, Chemistry and Mathematics.</li>
+                <li data-name="DPP management">Management of daily practice problems (DPPs).</li>
+                <li data-name="Batch management">Organises students into batches.</li>
+                <li data-name="Analytics">Performance analytics built from test attempts.</li>
+                <li data-name="Proctoring (explored)">Explored camera, microphone and screen-share monitoring with event logging for exams.</li>
+              </ul>
+              <figcaption class="map-note"></figcaption>
+            </figure>
+          </div>
+        </article>
 
-            <nav>
-                <a href="#" class="active">Home</a>
-                <a href="#about">About</a>
-                <a href="#skills">Skills</a>
-                <a href="#portfolio">Portfolio</a>
-                <a href="#contact">Contact</a>
-            </nav>
-        </header>
-
-
-        <!-- HERO -->
-
-        <section class="hero">
-
-            <div class="hero-text">
-
-                <h3>Hello, It's Me</h3>
-
-                <h1>Adarsh Gupta</h1>
-
-                <h2>
-                    And I'm a
-                    <span class="cyan">Full Stack Developer</span>
-                </h2>
-
-                <p>
-                    I build modern web applications, AI-powered tools,
-                    and scalable digital products. Currently focused on
-                    web development, DSA and AI/ML.
-                </p>
-
-
-                <!-- SOCIAL -->
-
-                <div class="social">
-
-                    <a href="#" target="_blank">
-                        <i class="fa-brands fa-github"></i>
-                    </a>
-
-                    <a href="#" target="_blank">
-                        <i class="fa-brands fa-linkedin-in"></i>
-                    </a>
-
-                    <a href="#" target="_blank">
-                        <i class="fa-brands fa-instagram"></i>
-                    </a>
-
-                    <a href="#" target="_blank">
-                        <i class="fa-brands fa-x-twitter"></i>
-                    </a>
-
-                </div>
-
-
-                <!-- CV -->
-
-                <a href="resume.pdf" class="cv-btn" download>
-                    Download CV
-                </a>
-
+        <article class="proj">
+          <header class="proj-head">
+            <h3>ShreekinOS</h3>
+            <p>CRM and ERP for Shreekin Life Sciences, a pharmaceutical company</p>
+          </header>
+          <div class="proj-body">
+            <div>
+              <p>Software for a pharma company's field team: who can see what, who reports to whom, who is on the ground, and how visits get planned.</p>
+              <ul class="points">
+                <li>Role-based access control, with each role routed to its own screens after login and data protected by Row-Level Security policies.</li>
+                <li>A manager and employee hierarchy across regions, zones and territories.</li>
+                <li>Sales workflows, field attendance and joint field-visit planning with business rules, plus a video-conferencing module that has a live reporting panel built in.</li>
+              </ul>
+              <p class="stack"><b>Stack:</b> React, Supabase, PostgreSQL, Edge Functions, Row-Level Security</p>
             </div>
+            <figure class="map" data-core="Supabase" data-sub="PostgreSQL + RLS" aria-label="Module map for ShreekinOS">
+              <ul class="map-list">
+                <li data-name="Roles and access">Role-based access control with role-based routing after login.</li>
+                <li data-name="Reporting hierarchy">Managers and employees organised across regions, zones and territories.</li>
+                <li data-name="Sales workflows">Sales workflows for field representatives.</li>
+                <li data-name="Field attendance">Attendance tracking for field employees.</li>
+                <li data-name="Joint field visits">Planning of joint visits between managers and field staff, with business rules.</li>
+                <li data-name="Video meetings">Video-conferencing module with an embedded real-time reporting panel.</li>
+                <li data-name="Employee lifecycle">Employee lifecycle features, including termination.</li>
+              </ul>
+              <figcaption class="map-note"></figcaption>
+            </figure>
+          </div>
+        </article>
 
+      </div>
+    </section>
 
-            <!-- PROFILE IMAGE -->
+    <section class="sec about" id="about" aria-labelledby="h-about">
+      <h2 id="h-about">About</h2>
+      <div>
+        <p>I'm a first-year student who is already building real products. Most of my work is in SaaS: exam platforms, business software and tools for students.</p>
+        <p>I want to be a developer who can build the whole product and understand every layer of it, which is why I'm working through DSA in C++ and a backend roadmap alongside my projects.</p>
+        <dl class="facts">
+          <dt>Languages</dt><dd>C++, Python, JavaScript, TypeScript, SQL, HTML and CSS</dd>
+          <dt>Frontend</dt><dd>React, Vite, Tailwind CSS, shadcn/ui</dd>
+          <dt>Backend and data</dt><dd>Supabase, PostgreSQL, Row-Level Security, Edge Functions, role-based access control, SMTP, OAuth</dd>
+          <dt>Tools</dt><dd>Git and GitHub, Vercel, Linux, VS Code, Lovable</dd>
+          <dt>Spoken languages</dt><dd>English and Hindi</dd>
+          <dt>Outside code</dt><dd>Gaming, photography and random clicks, travelling, fitness</dd>
+        </dl>
+      </div>
+    </section>
 
-            <div class="hero-image">
+    <section class="sec" id="learning" aria-labelledby="h-learning">
+      <h2 id="h-learning">What I'm learning</h2>
+      <ul class="rows">
+        <li>
+          <h3>Backend engineering</h3>
+          <p>Node.js, Express, SQL and PostgreSQL, Prisma, authentication, security, testing and deployment, at 45 to 60 minutes a day.</p>
+        </li>
+        <li>
+          <h3>DSA in C++</h3>
+          <p>Working through Striver's A2Z sheet (recursion and arrays so far) with regular LeetCode practice, aiming to be genuinely placement-ready.</p>
+        </li>
+        <li>
+          <h3>Cloud and AI</h3>
+          <p>Google Cloud, Firebase and AI/ML, with a focus on Generative AI applications.</p>
+        </li>
+      </ul>
+    </section>
 
-                <div class="hexagon">
+    <section class="sec" id="campus" aria-labelledby="h-campus">
+      <h2 id="h-campus">Campus life</h2>
+      <ul class="rows">
+        <li>
+          <div><h3>ICCHE</h3><span class="when">Students' Outreach Programme, IIEST Shibpur</span></div>
+          <p>I volunteer with ICCHE, the institute's social outreach programme, which runs free classes for underprivileged children living near campus. <a href="https://www.icche.in/" rel="noopener">ichhe.in</a></p>
+        </li>
+        <li>
+          <div><h3>Catharsis</h3><span class="when">The Photographic Society of IIEST Shibpur</span></div>
+          <p>Member of the campus photography society. I shoot institute events and whatever catches my eye around campus.</p>
+        </li>
+      </ul>
+    </section>
 
-                    <img
-                        src="profile.png"
-                        alt="Adarsh Gupta"
-                    >
+    <section class="sec" id="education" aria-labelledby="h-edu">
+      <h2 id="h-edu">Education</h2>
+      <ul class="rows">
+        <li>
+          <div><h3>IIEST Shibpur</h3><span class="when">2026 to 2030</span></div>
+          <p>B.Tech in Computer Software Engineering. Currently in the first semester.</p>
+        </li>
+        <li>
+          <div><h3>Little Flower House Senior Secondary School</h3><span class="when">2023 to 2025</span></div>
+          <p>Class XII in Physics, Chemistry and Mathematics: 83.4%.</p>
+        </li>
+        <li>
+          <div><h3>Varanasi Public School</h3><span class="when">Completed 2023</span></div>
+          <p>Class X: 90.8%.</p>
+        </li>
+      </ul>
+    </section>
 
-                </div>
+    <section class="sec contact" id="contact" aria-labelledby="h-contact">
+      <h2 id="h-contact">Contact</h2>
+      <div>
+        <p>Open to projects, hackathon teams and opportunities where I can build and learn. Email is the fastest way to reach me.</p>
+        <ul>
+          <li><a href="mailto:adarsh07gupta@gmail.com">adarsh07gupta@gmail.com</a></li>
+          <li><a href="https://github.com/adarshgupta162" rel="noopener">github.com/adarshgupta162</a></li>
+          <li><a href="https://www.linkedin.com/in/adarsh07gupta" rel="noopener">linkedin.com/in/adarsh07gupta</a></li>
+        </ul>
+      </div>
+    </section>
+  </main>
 
-            </div>
+  <footer>Adarsh Gupta, Varanasi, India.</footer>
+</div>
 
-        </section>
+<script>
+(function () {
+  var NS = 'http://www.w3.org/2000/svg';
+  function el(name, attrs, text) {
+    var n = document.createElementNS(NS, name);
+    for (var k in attrs) n.setAttribute(k, attrs[k]);
+    if (text != null) n.textContent = text;
+    return n;
+  }
 
-    </div>
+  document.querySelectorAll('.map').forEach(function (map) {
+    var items = Array.prototype.map.call(map.querySelectorAll('.map-list li'), function (li) {
+      return { name: li.getAttribute('data-name'), note: li.textContent.trim() };
+    });
+    var note = map.querySelector('.map-note');
 
+    var rowH = 52, boxH = 40, pad = 4;
+    var W = 440, H = items.length * rowH - (rowH - boxH) + pad * 2;
+    var coreW = 140, coreH = 68, modX = 200, modW = 240, midX = 170;
+    var cy = H / 2;
+
+    var svg = el('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'group', 'aria-label': 'Modules. Select one to read what it does.' });
+
+    items.forEach(function (it, i) {
+      var y = pad + i * rowH, my = y + boxH / 2;
+      svg.appendChild(el('path', { 'class': 'link', d: 'M' + coreW + ' ' + cy + ' H' + midX + ' V' + my + ' H' + modX }));
+    });
+
+    var core = el('g', { 'class': 'core' });
+    core.appendChild(el('rect', { x: 0, y: cy - coreH / 2, width: coreW, height: coreH, rx: 3 }));
+    core.appendChild(el('text', { x: coreW / 2, y: cy - 3, 'text-anchor': 'middle', 'font-size': 16, 'font-weight': 700 }, map.getAttribute('data-core')));
+    core.appendChild(el('text', { x: coreW / 2, y: cy + 16, 'text-anchor': 'middle', 'font-size': 11.5, 'font-weight': 400 }, map.getAttribute('data-sub')));
+    svg.appendChild(core);
+
+    var buttons = [];
+    function select(i) {
+      buttons.forEach(function (b, j) { b.setAttribute('aria-pressed', j === i ? 'true' : 'false'); });
+      note.innerHTML = '';
+      var b = document.createElement('b');
+      b.textContent = items[i].name + '. ';
+      note.appendChild(b);
+      note.appendChild(document.createTextNode(items[i].note));
+    }
+
+    items.forEach(function (it, i) {
+      var y = pad + i * rowH;
+      var g = el('g', { 'class': 'mod', role: 'button', tabindex: 0, 'aria-pressed': 'false', 'aria-label': it.name });
+      g.appendChild(el('rect', { x: modX, y: y, width: modW, height: boxH, rx: 3 }));
+      g.appendChild(el('text', { x: modX + 14, y: y + boxH / 2 + 5 }, it.name));
+      g.addEventListener('click', function () { select(i); });
+      g.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); select(i); }
+      });
+      buttons.push(g);
+      svg.appendChild(g);
+    });
+
+    map.insertBefore(svg, note);
+    note.setAttribute('aria-live', 'polite');
+    map.classList.add('enhanced');
+    select(0);
+  });
+})();
+</script>
 </body>
 </html>

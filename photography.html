@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0a0a18">
+  <meta name="description" content="Adarsh Gupta's visual diary — photographs and moments captured along the way.">
+  <title>Photography — Adarsh Gupta</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/photography.css">
+  <script src="js/photography-manifest.js" defer></script>
+  <script src="js/photography.js" defer></script>
+</head>
+<body class="photo-page">
+  <div class="ambient" aria-hidden="true"></div>
+  <main class="gallery-shell">
+    <header class="gallery-topbar">
+      <a class="back-link" href="index.html"><span aria-hidden="true">←</span> Portfolio</a>
+      <span class="topbar-mark">AG <i> / </i> VISUAL DIARY</span>
+      <a class="topbar-link" href="#gallery">Explore gallery <span aria-hidden="true">↗</span></a>
+    </header>
+
+    <section class="gallery-intro" aria-labelledby="gallery-title">
+      <p class="eyebrow"><span class="eyebrow-dot"></span> A COLLECTION OF MOMENTS</p>
+      <h1 id="gallery-title">My Visual <span>Diary.</span></h1>
+      <p class="intro-copy">The world, as I see it through my lens.<br>Places, people, light — and the moments in between.</p>
+    </section>
+
+    <nav class="filters" id="filters" aria-label="Filter photographs">
+      <span class="filter-spacer"></span>
+      <span class="gallery-count"><span id="visible-count">08</span> FRAMES</span>
+    </nav>
+
+    <section class="photo-stage" id="gallery" aria-label="Featured photography carousel">
+      <div class="stage-glow" aria-hidden="true"></div>
+      <button class="stage-arrow stage-arrow-left" id="prev-photo" type="button" aria-label="Previous photograph">←</button>
+      <div class="stage-track" id="stage-track">
+        <button class="stage-card stage-card-far stage-card-left" type="button" data-step="-2" aria-label="Show previous photograph">
+          <img alt="" loading="lazy">
+          <span class="card-index"></span>
+        </button>
+        <button class="stage-card stage-card-near stage-card-left-near" type="button" data-step="-1" aria-label="Show previous photograph">
+          <img alt="" loading="lazy">
+          <span class="card-index"></span>
+        </button>
+        <button class="stage-card stage-card-main" type="button" id="open-featured" aria-label="Open featured photograph">
+          <img id="featured-image" alt="Featured photograph">
+          <span class="featured-caption"><span class="caption-kicker" id="featured-category">TRAVEL NOTES</span><strong id="featured-title">A little further away</strong><span id="featured-location">Dolomites, Italy</span></span>
+          <span class="image-expand" aria-hidden="true">↗</span>
+        </button>
+        <button class="stage-card stage-card-near stage-card-right-near" type="button" data-step="1" aria-label="Show next photograph">
+          <img alt="" loading="lazy">
+          <span class="card-index"></span>
+        </button>
+        <button class="stage-card stage-card-far stage-card-right" type="button" data-step="2" aria-label="Show next photograph">
+          <img alt="" loading="lazy">
+          <span class="card-index"></span>
+        </button>
+      </div>
+      <div class="stage-bottom">
+        <p><span id="current-index">01</span><i> / </i><span id="total-index">08</span></p>
+        <div class="stage-controls">
+          <button id="prev-round" type="button" aria-label="Previous photograph">←</button>
+          <button id="next-round" type="button" aria-label="Next photograph">→</button>
+        </div>
+        <p class="stage-hint">USE ARROWS TO WANDER <span aria-hidden="true">↔</span></p>
+      </div>
+    </section>
+
+    <section class="all-photos" aria-labelledby="all-photos-title">
+      <div class="section-heading">
+        <div><p class="eyebrow">THE COLLECTION</p><h2 id="all-photos-title">Collected along the way<span>.</span></h2></div>
+        <p>Every frame holds a small story.<br>Pick one and take a closer look.</p>
+      </div>
+      <div class="photo-grid" id="photo-grid"></div>
+    </section>
+
+    <footer class="gallery-footer">
+      <a href="index.html">← Back to Adarsh's portfolio</a>
+      <span>MADE OF PLACES, LIGHT & LITTLE MEMORIES</span>
+      <span>© <span id="year"></span> ADARSH GUPTA</span>
+    </footer>
+  </main>
+
+  <dialog class="lightbox" id="lightbox" aria-label="Photograph viewer">
+    <button class="lightbox-close" id="close-lightbox" type="button" aria-label="Close photograph">×</button>
+    <button class="lightbox-nav lightbox-prev" id="lightbox-prev" type="button" aria-label="Previous photograph">←</button>
+    <figure>
+      <img id="lightbox-image" alt="">
+      <figcaption><span id="lightbox-location"></span><strong id="lightbox-title"></strong><p id="lightbox-description"></p></figcaption>
+    </figure>
+    <button class="lightbox-nav lightbox-next" id="lightbox-next" type="button" aria-label="Next photograph">→</button>
+  </dialog>
+</body>
+</html>

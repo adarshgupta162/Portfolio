@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Live LeetCode problem-solving progress for Adarsh Gupta.">
+  <meta name="theme-color" content="#f3f4f7">
+  <title>LeetCode Progress — Adarsh Gupta</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/leetcode.js" defer></script>
+</head>
+<body>
+<div class="page-grid" aria-hidden="true"></div>
+<div class="site-shell">
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="Adarsh Gupta home">AG<span>.</span></a>
+    <nav class="main-nav" aria-label="Main navigation">
+      <a href="index.html#projects">Projects</a><a href="photography.html">Photography</a><a href="leetcode.html" aria-current="page">LeetCode</a><a href="index.html#about">About</a>
+    </nav>
+    <a class="header-cta" href="index.html#contact">Let’s talk <span aria-hidden="true">↗</span></a>
+  </header>
+  <main class="subpage-main">
+    <section class="subpage-hero">
+      <div class="subpage-kicker">PROBLEM SOLVING / 02 · DSA IN PUBLIC</div>
+      <h1>Progress, one<br><em>problem at a time.</em></h1>
+      <p class="subpage-intro">A live snapshot of LeetCode practice. Enter your LeetCode username to load solved counts, difficulty breakdown and a contribution-style activity grid from a community-maintained API.</p>
+      <div class="subpage-toolbar"><span class="subpage-kicker">CONSISTENCY OVER STREAKS</span><nav class="subpage-nav"><a href="index.html">← Back to portfolio</a><a href="https://leetcode.com/" target="_blank" rel="noopener noreferrer">Open LeetCode ↗</a></nav></div>
+    </section>
+    <section style="padding:34px 0 90px" aria-labelledby="stats-heading">
+      <div class="stats-panel">
+        <div class="subpage-kicker">YOUR PRACTICE DASHBOARD</div>
+        <h2 id="stats-heading" style="font:700 clamp(1.5rem,3vw,2.2rem) Manrope,sans-serif;letter-spacing:-.05em;margin:12px 0 0">LeetCode stats</h2>
+        <form class="stats-form" id="stats-form">
+          <label for="leetcode-username" class="sr-only">LeetCode username</label>
+          <input id="leetcode-username" name="username" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Enter your LeetCode username" value="adarshgupta162" required>
+          <button id="stats-submit" type="submit">Load progress ↗</button>
+        </form>
+        <p class="stats-message" id="stats-message" role="status" aria-live="polite">Enter your username and load the latest available stats.</p>
+        <div class="stats-grid" id="stats-grid">
+          <div class="stat-card"><span>Total solved</span><strong id="total-solved">—</strong></div>
+          <div class="stat-card"><span>Easy solved</span><strong id="easy-solved">—</strong></div>
+          <div class="stat-card"><span>Medium solved</span><strong id="medium-solved">—</strong></div>
+          <div class="stat-card"><span>Hard solved</span><strong id="hard-solved">—</strong></div>
+        </div>
+        <div class="difficulty-list">
+          <div class="difficulty-row"><span>Easy</span><div class="difficulty-track"><div class="difficulty-fill easy" id="easy-fill"></div></div><strong id="easy-detail">—</strong></div>
+          <div class="difficulty-row"><span>Medium</span><div class="difficulty-track"><div class="difficulty-fill medium" id="medium-fill"></div></div><strong id="medium-detail">—</strong></div>
+          <div class="difficulty-row"><span>Hard</span><div class="difficulty-track"><div class="difficulty-fill hard" id="hard-fill"></div></div><strong id="hard-detail">—</strong></div>
+        </div>
+        <div class="activity-wrap">
+          <div class="activity-title"><h2>Recent activity</h2><span class="subpage-kicker" id="activity-subtitle">WAITING FOR API</span></div>
+          <div class="activity-grid" id="activity-grid" aria-label="Submission activity by day"></div>
+          <p class="api-disclaimer" id="activity-note">The activity grid is populated if the API returns a submission calendar. Otherwise, the solved-problem totals will still be shown where available.</p>
+        </div>
+        <p class="api-disclaimer">Data comes from a third-party, community-maintained LeetCode API, not an official LeetCode API. It may be temporarily unavailable, rate-limited or changed without notice. For a production site, use a small server-side proxy/cache rather than relying on a public API directly from the browser.</p>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer"><a class="brand" href="index.html">AG<span>.</span></a><span>SMALL STEPS, REPEATED.</span><div><a href="https://leetcode.com/" target="_blank" rel="noopener noreferrer">LeetCode ↗</a><a href="photography.html">Photography ↗</a></div></footer>
+</div>
+</body>
+</html>

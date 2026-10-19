@@ -1,140 +1,92 @@
 (() => {
-  "use strict";
-  const USERNAME = "adarshgupta162";
-  const API = "https://alfa-leetcode-api.onrender.com";
-  const $ = id => document.getElementById(id);
+  'use strict';
+  const username = 'adarshgupta162';
+  const api = 'https://alfa-leetcode-api.onrender.com';
+  const $ = (id) => document.getElementById(id);
+  const fmt = (value) => Number.isFinite(Number(value)) ? Number(value).toLocaleString('en-IN') : '—';
+  const first = (...values) => values.find((v) => v !== undefined && v !== null && v !== '');
   const setText = (id, value) => { const el = $(id); if (el) el.textContent = value; };
-  const asNumber = value => {
-    if (value === null || value === undefined || value === "") return null;
-    const n = Number(value);
-    return Number.isFinite(n) ? n : null;
+  const setBar = (id, count, total) => {
+    const el = $(id);
+    if (!el) return;
+    const pct = Number(total) > 0 ? Math.max(0, Math.min(100, Number(count) / Number(total) * 100)) : 0;
+    el.style.width = `${pct}%`;
   };
-  const fmt = value => asNumber(value) === null ? "—" : Number(value).toLocaleString("en-US");
-
-  async function request(endpoint) {
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 12000);
-    try {
-      const response = await fetch(`${API}/${USERNAME}/${endpoint}`, {
-        signal: controller.signal, headers: { Accept: "application/json" }
-      });
-      if (!response.ok) throw new Error(`API HTTP ${response.status} (${endpoint})`);
-      return await response.json();
-    } finally { clearTimeout(timeout); }
+  const setPct = (id, count, total) => {
+    const pct = Number(total) > 0 ? Math.round(Number(count) / Number(total) * 100) : 0;
+    setText(id, Number(total) > 0 ? `${pct}%` : '—');
+  };
+  async function get(path) {
+    const response = await fetch(`${api}/${username}/${path}`, { headers: { Accept: 'application/json' } });
+    if (!response.ok) throw new Error(`API returned ${response.status}`);
+    return response.json();
   }
-
-  function flatten(data) {
-    const result = [], seen = new Set();
-    function walk(value, depth = 0) {
-      if (!value || typeof value !== "object" || seen.has(value) || depth > 5) return;
-      seen.add(value); result.push(value);
-      Object.values(value).forEach(v => { if (v && typeof v === "object") walk(v, depth + 1); });
+  function renderSolved(data) {
+    const easy = Number(first(data.easySolved, data.easy, data.solvedProblem?.easy, 0));
+    const medium = Number(first(data.mediumSolved, data.medium, data.solvedProblem?.medium, 0));
+    const hard = Number(first(data.hardSolved, data.hard, data.solvedProblem?.hard, 0));
+    const total = Number(first(data.solvedProblem, data.totalSolved, data.total, easy + medium + hard));
+    const easyTotal = Number(first(data.totalEasy, data.totalEasyQuestions, data.totalProblems?.easy, 0));
+    const mediumTotal = Number(first(data.totalMedium, data.totalMediumQuestions, data.totalProblems?.medium, 0));
+    const hardTotal = Number(first(data.totalHard, data.totalHardQuestions, data.totalProblems?.hard, 0));
+    setText('total-solved', fmt(total || easy + medium + hard));
+    setText('easy-solved', fmt(easy)); setText('medium-solved', fmt(medium)); setText('hard-solved', fmt(hard));
+    setText('solved-caption', 'Problems completed');
+    setText('easy-total', easyTotal ? `of ${fmt(easyTotal)} problems` : 'Solved problems');
+    setText('medium-total', mediumTotal ? `of ${fmt(mediumTotal)} problems` : 'Solved problems');
+    setText('hard-total', hardTotal ? `of ${fmt(hardTotal)} problems` : 'Solved problems');
+    setBar('easy-progress', easy, easyTotal); setBar('medium-progress', medium, mediumTotal); setBar('hard-progress', hard, hardTotal);
+    setPct('easy-percent', easy, easyTotal); setPct('medium-percent', medium, mediumTotal); setPct('hard-percent', hard, hardTotal);
+  }
+  function renderContest(data) {
+    const rating = first(data.contestRating, data.rating, data.currentRating);
+    const ranking = first(data.globalRanking, data.ranking, data.topPercentage);
+    const attended = first(data.attendedContestsCount, data.contestsAttended, data.attended);
+    setText('contest-rating', rating != null ? fmt(rating) : '—');
+    setText('contest-ranking', ranking != null ? (data.topPercentage != null && ranking === data.topPercentage ? `${ranking}%` : fmt(ranking)) : '—');
+    setText('contest-attended', attended != null ? fmt(attended) : '—');
+    setText('contest-note', rating == null && attended == null ? 'Contest information was not returned by the API.' : 'Contest details reflect the latest data returned by the API.');
+  }
+  function renderCalendar(data) {
+    const root = $('activity-grid');
+    if (!root) return;
+    root.replaceChildren();
+    let map = first(data.submissionCalendar, data.calendar, data);
+    if (typeof map === 'string') { try { map = JSON.parse(map); } catch { map = {}; } }
+    if (map && map.submissionCalendar) map = map.submissionCalendar;
+    const entries = map && typeof map === 'object' ? Object.entries(map).filter(([key, value]) => /^\d+$/.test(key) && Number(value) >= 0) : [];
+    const recent = entries.sort((a, b) => Number(a[0]) - Number(b[0])).slice(-364);
+    const max = Math.max(1, ...recent.map(([, count]) => Number(count)));
+    recent.forEach(([timestamp, count]) => {
+      const cell = document.createElement('span');
+      const n = Number(count);
+      const level = n === 0 ? 0 : n / max < .25 ? 1 : n / max < .5 ? 2 : n / max < .75 ? 3 : 4;
+      cell.className = 'activity-cell'; cell.dataset.level = String(level);
+      cell.title = `${new Date(Number(timestamp) * 1000).toLocaleDateString()}: ${n} submissions`;
+      root.appendChild(cell);
+    });
+    const days = recent.filter(([, count]) => Number(count) > 0).length;
+    setText('active-days', fmt(days));
+    setText('activity-note', recent.length ? `${days} active days represented in the recent activity data. Each square represents a day with submission activity.` : 'No activity calendar was returned. Open your LeetCode profile to view the full calendar.');
+  }
+  async function load() {
+    const button = $('refresh-button');
+    const status = $('api-status');
+    if (button) { button.disabled = true; button.textContent = 'Loading…'; }
+    if (status) { status.classList.remove('is-error'); status.textContent = 'Loading profile data…'; }
+    const outcomes = await Promise.allSettled([get('solved'), get('contest'), get('calendar')]);
+    let success = 0;
+    if (outcomes[0].status === 'fulfilled') { renderSolved(outcomes[0].value); success++; }
+    if (outcomes[1].status === 'fulfilled') { renderContest(outcomes[1].value); success++; }
+    if (outcomes[2].status === 'fulfilled') { renderCalendar(outcomes[2].value); success++; }
+    const now = new Date().toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' });
+    setText('last-updated', `LAST CHECKED · ${now}`);
+    if (status) {
+      status.textContent = success === 3 ? 'Connected · stats refreshed. Data is supplied by an unofficial third-party API.' : success > 0 ? `Partially connected (${success}/3 data sources). Some stats may be unavailable; try refreshing later.` : 'Could not load LeetCode stats. The unofficial API may be asleep or unavailable; try again shortly.';
+      if (success === 0) status.classList.add('is-error');
     }
-    walk(data); return result;
+    if (button) { button.disabled = false; button.textContent = '↻ Refresh stats'; }
   }
-  function pick(objects, keys) {
-    for (const obj of objects) for (const key of keys) {
-      if (obj && obj[key] !== undefined && obj[key] !== null && obj[key] !== "") return obj[key];
-    }
-    return null;
-  }
-  function bar(id, solved, total) {
-    const el = $(id), s = asNumber(solved), t = asNumber(total);
-    if (el) el.style.width = (s !== null && t > 0 ? Math.min(100, s / t * 100) : 0) + "%";
-  }
-
-  function updateSolved(solvedData, profileData) {
-    const all = [...flatten(solvedData || {}), ...flatten(profileData || {})];
-    const easy = asNumber(pick(all, ["easySolved", "easy"]));
-    const medium = asNumber(pick(all, ["mediumSolved", "medium"]));
-    const hard = asNumber(pick(all, ["hardSolved", "hard"]));
-    let total = asNumber(pick(all, ["solvedProblem", "totalSolved", "totalSolvedQuestions", "totalAC"]));
-    if (total === null && easy !== null && medium !== null && hard !== null) total = easy + medium + hard;
-
-    // Some API versions return difficulty totals as [{difficulty:"Easy", count:...}, ...].
-    const rows = pick(all, ["allQuestionsCount", "solvedProblem"]);
-    const totalFor = difficulty => {
-      if (!Array.isArray(rows)) return null;
-      const row = rows.find(item => String(item.difficulty || item.name || "").toLowerCase() === difficulty);
-      return row ? asNumber(row.count ?? row.total) : null;
-    };
-    const easyTotal = totalFor("easy"), mediumTotal = totalFor("medium"), hardTotal = totalFor("hard");
-    const totalQuestions = [easyTotal, mediumTotal, hardTotal].every(v => v !== null)
-      ? easyTotal + mediumTotal + hardTotal : null;
-
-    setText("total-solved", fmt(total)); setText("easy-solved", fmt(easy));
-    setText("medium-solved", fmt(medium)); setText("hard-solved", fmt(hard));
-    setText("easy-total", `of ${fmt(easyTotal)}`); setText("medium-total", `of ${fmt(mediumTotal)}`);
-    setText("hard-total", `of ${fmt(hardTotal)}`); setText("total-target", `/ ${fmt(totalQuestions)}`);
-    setText("solved-caption", total !== null && totalQuestions !== null
-      ? `${(totalQuestions ? total / totalQuestions * 100 : 0).toFixed(1)}% of tracked problems`
-      : "Solved across all difficulties");
-    bar("total-progress", total, totalQuestions); bar("easy-progress", easy, easyTotal);
-    bar("medium-progress", medium, mediumTotal); bar("hard-progress", hard, hardTotal);
-    if ([total, easy, medium, hard].every(v => v === null)) {
-      throw new Error("API responded, but the solved-stat fields were not recognized. Check the endpoint JSON.");
-    }
-  }
-
-  function updateContest(data) {
-    const all = flatten(data || {});
-    setText("contest-rating", fmt(pick(all, ["rating", "currentRating", "contestRating"])));
-    setText("contest-ranking", fmt(pick(all, ["globalRanking", "ranking", "globalRank"])));
-    setText("contest-attended", fmt(pick(all, ["attendedContestsCount", "attended", "contestAttend"])));
-  }
-
-  function updateActivity(data) {
-    const all = flatten(data || {});
-    let raw = pick(all, ["submissionCalendar", "calendar"]);
-    let total = null;
-    if (typeof raw === "string") {
-      try { raw = JSON.parse(raw); } catch (_) { raw = null; }
-    }
-    if (raw && typeof raw === "object" && !Array.isArray(raw)) {
-      total = Object.values(raw).reduce((sum, value) => sum + (asNumber(value) || 0), 0);
-    }
-    if (total === null) total = asNumber(pick(all, ["totalSubmissions", "submissionCount", "totalActiveDays"]));
-    setText("active-days", fmt(total));
-    setText("activity-note", total === null
-      ? "Activity summary wasn't available in the API response. Open LeetCode for the full calendar."
-      : "This is the total activity count returned by the API; it may count submissions, not unique days.");
-  }
-
-  async function loadStats() {
-    const button = $("refresh-button"), statusBar = document.querySelector(".api-status");
-    if (button) { button.disabled = true; button.textContent = "Loading…"; }
-    statusBar?.classList.remove("error");
-    setText("api-status-text", "Fetching stats from the API…");
-    const results = await Promise.allSettled([
-      request("profile"), request("solved"), request("contest"), request("calendar")
-    ]);
-    try {
-      const [profile, solved, contest, calendar] = results.map(r => r.status === "fulfilled" ? r.value : null);
-      const failures = results.filter(r => r.status === "rejected");
-      if (solved || profile) {
-        try { updateSolved(solved, profile); }
-        catch (error) { console.warn(error); }
-      }
-      if (contest) updateContest(contest);
-      if (calendar) updateActivity(calendar);
-      if (failures.length === results.length) throw new Error("The API is unreachable or temporarily unavailable.");
-      setText("api-status-text", failures.length
-        ? `Some stats loaded; ${failures.length} request(s) failed. Try refresh shortly.`
-        : "Stats loaded from the LeetCode API.");
-      if (failures.length) statusBar?.classList.add("error");
-      setText("last-updated", `Last checked ${new Date().toLocaleTimeString([], {hour:"2-digit", minute:"2-digit"})}`);
-    } catch (error) {
-      console.error("LeetCode API:", error);
-      setText("api-status-text", `${error.message} You can still open your LeetCode profile directly.`);
-      setText("last-updated", "Live stats unavailable right now");
-      statusBar?.classList.add("error");
-    } finally {
-      if (button) { button.disabled = false; button.textContent = "↻ Refresh stats"; }
-    }
-  }
-
-  document.addEventListener("DOMContentLoaded", () => {
-    $("refresh-button")?.addEventListener("click", loadStats);
-    loadStats();
-  });
+  $('refresh-button')?.addEventListener('click', load);
+  load();
 })();

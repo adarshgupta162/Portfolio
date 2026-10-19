@@ -1,43 +1,99 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Adarsh Gupta's LeetCode problem-solving stats">
-<title>LeetCode | Adarsh Gupta</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/leetcode.css"><script src="js/leetcode.js" defer></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Adarsh Gupta's LeetCode problem-solving stats">
+  <title>LeetCode | Adarsh Gupta</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&display=swap" rel="stylesheet">
+  <!-- Change this path if your portfolio stylesheet has a different filename. -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/leetcode.css">
+  <script src="js/leetcode.js" defer></script>
 </head>
 <body>
-<div class="glow"></div>
-<header class="topbar">
-<a class="brand" href="index.html"><span class="mark">A</span> adarsh<span class="orange">.</span></a>
-<nav><a href="index.html">Portfolio</a><a class="active" href="leetcode.html">LeetCode</a><a href="https://leetcode.com/u/adarshgupta162/" target="_blank" rel="noreferrer">Profile ↗</a></nav>
-</header>
-<main class="wrap">
-<section class="hero">
-<div class="eyebrow"><i></i> CODING PROFILE <span>/</span> LIVE STATS</div>
-<div class="hero-grid">
-<div><p class="overline">CONSISTENCY OVER INTENSITY</p><h1>One problem<br>at a time<span class="orange">.</span></h1>
-<p class="intro">Tracking my problem-solving journey, sharpening data structures and algorithms, and getting better every day.</p>
-<div class="actions"><a class="primary" href="https://leetcode.com/u/adarshgupta162/" target="_blank" rel="noreferrer">View LeetCode profile ↗</a><button id="refresh-button">↻ Refresh stats</button></div>
-<p class="updated" id="last-updated">Connecting to LeetCode API…</p></div>
-<aside class="profile"><div class="profile-head"><span>LEETCODE USER</span><small><i></i> API</small></div><div class="avatar">AG</div><h2>Adarsh Gupta</h2><p class="muted">@adarshgupta162</p><hr><div class="profile-row"><span>Platform</span><b>LeetCode</b></div><div class="profile-row"><span>Focus</span><b>DSA · C++</b></div><a class="profile-link" href="https://leetcode.com/u/adarshgupta162/" target="_blank" rel="noreferrer">Open full profile ↗</a></aside>
-</div>
-</section>
-<section class="stats">
-<div class="section-head"><div><p class="overline">AT A GLANCE</p><h2>Problem-solving stats</h2></div><span class="section-index">01 / OVERVIEW</span></div>
-<div class="cards">
-<article class="card featured"><div class="card-top">TOTAL SOLVED <span>↗</span></div><div class="number" id="total-solved">—</div><p>Problems completed</p><div class="track"><div id="total-progress"></div></div><div class="card-foot"><span id="solved-caption">Fetching breakdown</span><span id="total-target">/ —</span></div></article>
-<article class="card"><div class="card-top">EASY <i class="easy-dot"></i></div><div class="number" id="easy-solved">—</div><p>Solved problems</p><div class="track"><div class="easy-bar" id="easy-progress"></div></div><div class="card-foot"><span id="easy-total">of —</span><span>Beginner</span></div></article>
-<article class="card"><div class="card-top">MEDIUM <i class="medium-dot"></i></div><div class="number" id="medium-solved">—</div><p>Solved problems</p><div class="track"><div class="medium-bar" id="medium-progress"></div></div><div class="card-foot"><span id="medium-total">of —</span><span>Intermediate</span></div></article>
-<article class="card"><div class="card-top">HARD <i class="hard-dot"></i></div><div class="number" id="hard-solved">—</div><p>Solved problems</p><div class="track"><div class="hard-bar" id="hard-progress"></div></div><div class="card-foot"><span id="hard-total">of —</span><span>Advanced</span></div></article>
-</div></section>
-<section class="bottom-grid">
-<article class="panel"><div class="section-head"><div><p class="overline">CONTEST PERFORMANCE</p><h2>Keep climbing.</h2></div><span class="panel-icon">↗</span></div><div class="contest-grid"><div><label>Contest rating</label><strong id="contest-rating">—</strong></div><div><label>Global ranking</label><strong id="contest-ranking">—</strong></div><div><label>Contests attended</label><strong id="contest-attended">—</strong></div></div><p class="note" id="contest-note">Contest details will appear when available.</p></article>
-<article class="panel"><div class="section-head"><div><p class="overline">ACTIVITY</p><h2>Show up daily.</h2></div><span class="panel-icon">▦</span></div><div class="activity"><strong id="active-days">—</strong><span>activity count returned by API</span></div><p class="note" id="activity-note">Loading activity summary…</p><a class="profile-link" href="https://leetcode.com/u/adarshgupta162/" target="_blank" rel="noreferrer">Explore activity on LeetCode ↗</a></article>
-</section>
-<div class="api-status" aria-live="polite"><i id="api-dot"></i><span id="api-status-text">Loading profile data…</span><small>Unofficial API; stats may be delayed or unavailable.</small></div>
-<footer><a class="brand" href="index.html"><span class="mark">A</span> adarsh<span class="orange">.</span></a><span>Built with curiosity and consistency.</span><a href="https://leetcode.com/u/adarshgupta162/" target="_blank" rel="noreferrer">LeetCode ↗</a></footer>
-</main>
-</body></html>
+  <div class="page-grid" aria-hidden="true"></div>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="site-shell">
+    <header class="site-header">
+      <a class="brand" href="index.html">adarsh<span>.</span></a>
+      <nav class="main-nav" aria-label="Main navigation">
+        <a href="index.html">Portfolio</a>
+        <a href="leetcode.html" aria-current="page" class="leetcode-nav-active">LeetCode</a>
+        <a href="https://leetcode.com/u/adarshgupta162/" target="_blank" rel="noreferrer">Profile ↗</a>
+      </nav>
+      <a class="header-cta" href="https://leetcode.com/u/adarshgupta162/" target="_blank" rel="noreferrer">View profile <span>↗</span></a>
+    </header>
+
+    <main id="main" class="subpage-main">
+      <section class="subpage-hero">
+        <p class="subpage-kicker"><span class="leetcode-status-dot"></span> CODING PROFILE / LIVE STATS</p>
+        <h1>One problem<br>at a time<em>.</em></h1>
+        <p class="subpage-intro">Tracking my problem-solving journey, sharpening data structures and algorithms, and getting better every day.</p>
+        <div class="leetcode-hero-meta">
+          <span>CONSISTENCY OVER INTENSITY</span>
+          <span id="last-updated">Connecting to LeetCode API…</span>
+        </div>
+      </section>
+
+      <section class="leetcode-section" aria-labelledby="overview-title">
+        <div class="leetcode-section-label">
+          <span>01</span><h2 id="overview-title">Problem-solving stats</h2><p>AT A GLANCE</p>
+        </div>
+        <div class="leetcode-section-content">
+          <div class="stats-panel">
+            <div class="leetcode-profile-line">
+              <div><p class="eyebrow">LEETCODE USER</p><h2>Adarsh Gupta</h2><p class="leetcode-handle">@adarshgupta162 · DSA · C++</p></div>
+              <div class="leetcode-avatar" aria-hidden="true">AG</div>
+            </div>
+            <div class="stats-grid">
+              <article class="stat-card stat-card-featured"><span>Total solved</span><strong id="total-solved">—</strong><small id="solved-caption">Problems completed</small></article>
+              <article class="stat-card"><span>Easy</span><strong id="easy-solved">—</strong><small id="easy-total">Solved problems</small></article>
+              <article class="stat-card"><span>Medium</span><strong id="medium-solved">—</strong><small id="medium-total">Solved problems</small></article>
+              <article class="stat-card"><span>Hard</span><strong id="hard-solved">—</strong><small id="hard-total">Solved problems</small></article>
+            </div>
+            <div class="leetcode-difficulty-list" aria-label="Solved problems by difficulty">
+              <div class="difficulty-row"><span>Easy</span><div class="difficulty-track"><div id="easy-progress" class="difficulty-fill easy"></div></div><b id="easy-percent">—</b></div>
+              <div class="difficulty-row"><span>Medium</span><div class="difficulty-track"><div id="medium-progress" class="difficulty-fill medium"></div></div><b id="medium-percent">—</b></div>
+              <div class="difficulty-row"><span>Hard</span><div class="difficulty-track"><div id="hard-progress" class="difficulty-fill hard"></div></div><b id="hard-percent">—</b></div>
+            </div>
+            <div class="leetcode-actions"><button class="outline-button" id="refresh-button" type="button">↻ Refresh stats</button><a class="text-link" href="https://leetcode.com/u/adarshgupta162/" target="_blank" rel="noreferrer">Open full profile <span>↗</span></a></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="leetcode-section" aria-labelledby="contest-title">
+        <div class="leetcode-section-label"><span>02</span><h2 id="contest-title">Contest performance</h2><p>KEEP CLIMBING</p></div>
+        <div class="leetcode-section-content">
+          <div class="leetcode-metric-grid">
+            <article class="stat-card"><span>Contest rating</span><strong id="contest-rating">—</strong></article>
+            <article class="stat-card"><span>Global ranking</span><strong id="contest-ranking">—</strong></article>
+            <article class="stat-card"><span>Contests attended</span><strong id="contest-attended">—</strong></article>
+          </div>
+          <p class="leetcode-note" id="contest-note">Contest details will appear when available.</p>
+        </div>
+      </section>
+
+      <section class="leetcode-section" aria-labelledby="activity-title">
+        <div class="leetcode-section-label"><span>03</span><h2 id="activity-title">Activity</h2><p>SHOW UP DAILY</p></div>
+        <div class="leetcode-section-content">
+          <div class="activity-wrap">
+            <div class="activity-title"><h2>Consistency, one day at a time.</h2><strong id="active-days">—</strong></div>
+            <div id="activity-grid" class="activity-grid" aria-label="LeetCode submission activity calendar"></div>
+            <p class="leetcode-note" id="activity-note">Loading activity summary…</p>
+          </div>
+          <p class="api-disclaimer" id="api-status" aria-live="polite">Loading profile data… Unofficial API; stats may be delayed or unavailable.</p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <a class="brand" href="index.html">adarsh<span>.</span></a>
+      <span>Built with curiosity and consistency.</span>
+      <div><a href="https://leetcode.com/u/adarshgupta162/" target="_blank" rel="noreferrer">LeetCode ↗</a><a href="index.html">Portfolio ↗</a></div>
+    </footer>
+  </div>
+</body>
+</html>

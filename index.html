@@ -1,156 +1,463 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Adarsh Gupta is a software developer and SaaS builder creating exam platforms, business software, and campus tools.">
-  <meta property="og:title" content="Adarsh Gupta | Software Developer & SaaS Builder">
-  <meta property="og:description" content="I build useful software, from exam platforms to field-sales tools — and collect moments through photography.">
-  <meta name="theme-color" content="#f3f4f7">
-  <title>Adarsh Gupta — Software Developer & SaaS Builder</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Adarsh Gupta | Portfolio</title>
+
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <!-- Google Font -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Poppins", sans-serif;
+            background: #11151d;
+            color: white;
+        }
+
+        /* Main container */
+
+        .container {
+            width: 87%;
+            max-width: 1350px;
+            min-height: 90vh;
+            margin: 5vh auto;
+            padding: 0 7%;
+            border-radius: 35px;
+            background: #1d222c;
+
+            box-shadow:
+                0 30px 70px rgba(0, 0, 0, 0.5),
+                0 40px 100px rgba(0, 238, 255, 0.18);
+
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Cyan glow at bottom */
+
+        .container::after {
+            content: "";
+            position: absolute;
+            width: 600px;
+            height: 250px;
+            bottom: -180px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #00eaff;
+            filter: blur(100px);
+            opacity: 0.65;
+            pointer-events: none;
+        }
+
+        /* Navbar */
+
+        header {
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        nav {
+            display: flex;
+            gap: 40px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        nav a:hover,
+        nav a.active {
+            color: #00eaff;
+        }
+
+        /* Hero */
+
+        .hero {
+            min-height: calc(90vh - 100px);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 60px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-text {
+            width: 55%;
+        }
+
+        .hero-text h3 {
+            font-size: 30px;
+            margin-bottom: 5px;
+        }
+
+        .hero-text h1 {
+            font-size: clamp(45px, 5vw, 65px);
+            line-height: 1.1;
+            margin-bottom: 12px;
+        }
+
+        .hero-text h2 {
+            font-size: 28px;
+            margin-bottom: 25px;
+        }
+
+        .cyan {
+            color: #00eaff;
+        }
+
+        .hero-text p {
+            max-width: 600px;
+            color: #d1d1d1;
+            font-size: 15px;
+            line-height: 1.7;
+            margin-bottom: 28px;
+        }
+
+        /* Social icons */
+
+        .social {
+            display: flex;
+            gap: 18px;
+            margin-bottom: 30px;
+        }
+
+        .social a {
+            width: 42px;
+            height: 42px;
+            border: 2px solid #00eaff;
+            border-radius: 50%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            color: #00eaff;
+            text-decoration: none;
+            font-size: 18px;
+
+            transition: 0.3s;
+        }
+
+        .social a:hover {
+            background: #00eaff;
+            color: #11151d;
+            box-shadow: 0 0 20px #00eaff;
+            transform: translateY(-4px);
+        }
+
+        /* Button */
+
+        .cv-btn {
+            display: inline-block;
+            padding: 14px 28px;
+
+            border-radius: 30px;
+            background: #00eaff;
+
+            color: #11151d;
+            text-decoration: none;
+
+            font-weight: 600;
+            font-size: 15px;
+
+            box-shadow: 0 0 20px rgba(0, 234, 255, 0.6);
+
+            transition: 0.3s;
+        }
+
+        .cv-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 35px rgba(0, 234, 255, 0.9);
+        }
+
+        /* Profile */
+
+        .hero-image {
+            width: 42%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hexagon {
+            width: 380px;
+            height: 430px;
+
+            background: #00eaff;
+
+            clip-path: polygon(
+                25% 6%,
+                75% 6%,
+                100% 25%,
+                100% 75%,
+                75% 94%,
+                25% 94%,
+                0 75%,
+                0 25%
+            );
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            filter:
+                drop-shadow(0 0 15px #00eaff)
+                drop-shadow(0 0 35px #00eaff);
+
+            position: relative;
+        }
+
+        .hexagon::before {
+            content: "";
+            position: absolute;
+            inset: 7px;
+
+            background: #1d222c;
+
+            clip-path: inherit;
+        }
+
+        .hexagon img {
+            width: 95%;
+            height: 95%;
+
+            object-fit: cover;
+
+            position: relative;
+            z-index: 2;
+
+            clip-path: polygon(
+                25% 6%,
+                75% 6%,
+                100% 25%,
+                100% 75%,
+                75% 94%,
+                25% 94%,
+                0 75%,
+                0 25%
+            );
+        }
+
+        /* Mobile */
+
+        @media (max-width: 900px) {
+
+            .container {
+                width: 94%;
+                padding: 0 6%;
+                margin: 3vh auto;
+            }
+
+            header {
+                height: 80px;
+            }
+
+            nav {
+                gap: 15px;
+            }
+
+            nav a {
+                font-size: 13px;
+            }
+
+            .hero {
+                flex-direction: column-reverse;
+                justify-content: center;
+                text-align: center;
+                padding: 40px 0;
+            }
+
+            .hero-text {
+                width: 100%;
+            }
+
+            .hero-image {
+                width: 100%;
+            }
+
+            .hexagon {
+                width: 280px;
+                height: 320px;
+            }
+
+            .social {
+                justify-content: center;
+            }
+
+            .hero-text h3 {
+                font-size: 24px;
+            }
+
+            .hero-text h2 {
+                font-size: 22px;
+            }
+        }
+
+        @media (max-width: 550px) {
+
+            .container {
+                min-height: 94vh;
+                border-radius: 25px;
+            }
+
+            .logo {
+                font-size: 20px;
+            }
+
+            nav {
+                display: none;
+            }
+
+            .hero {
+                min-height: calc(94vh - 80px);
+            }
+
+            .hexagon {
+                width: 230px;
+                height: 270px;
+            }
+
+            .hero-text h1 {
+                font-size: 40px;
+            }
+
+            .hero-text h3 {
+                font-size: 20px;
+            }
+
+            .hero-text h2 {
+                font-size: 19px;
+            }
+
+            .hero-text p {
+                font-size: 13px;
+            }
+        }
+    </style>
 </head>
 <body>
-<a class="skip-link" href="#main">Skip to content</a>
-<div class="page-grid" aria-hidden="true"></div>
-<div class="site-shell">
-  <header class="site-header">
-    <a class="brand" href="#top" aria-label="Adarsh Gupta, home">AG<span>.</span></a>
-    <nav class="main-nav" aria-label="Main navigation">
-      <a href="#projects">Projects</a>
-      <a href="photography.html">Photography</a>
-      <a href="leetcode.html">LeetCode</a>
-      <a href="#about">About</a>
-      <a href="#learning">Learning</a>
-      <a href="#campus">Campus</a>
-    </nav>
-    <a class="header-cta" href="#contact">Let’s talk <span aria-hidden="true">↗</span></a>
-  </header>
 
-  <main id="main">
-    <section class="hero" id="top">
-      <div class="hero-topline"><span class="status-dot"></span> BUILDING ON THE WEB · VARANASI, INDIA</div>
-      <h1>Ideas into<br><span class="serif-word">useful</span> software<span class="period">.</span></h1>
-      <div class="hero-bottom">
-        <p class="hero-lede">I'm Adarsh Gupta — a software developer and SaaS builder creating products that solve real problems.</p>
-        <div class="hero-side">
-          <p>Currently exploring the intersection of product engineering, backend systems and thoughtful design.</p>
-          <a class="text-link" href="#projects">Explore my work <span aria-hidden="true">↓</span></a>
-        </div>
-      </div>
-      <div class="hero-index"><span>01 / INTRODUCTION</span><span>SOFTWARE · PRODUCT · PHOTOGRAPHY</span></div>
-    </section>
+    <div class="container">
 
-    <section class="section projects-section" id="projects">
-      <div class="section-label"><span>01</span><h2>Selected work</h2><p>PRODUCTS IN PROGRESS</p></div>
-      <div class="section-content">
-        <article class="project-card project-phy">
-          <div class="project-number">PROJECT / 01</div>
-          <div class="project-main">
-            <div class="project-copy">
-              <p class="eyebrow">EDTECH · EXAM PLATFORM</p>
-              <h3>PhyNetix<span class="project-mark">↗</span></h3>
-              <p class="project-description">A JEE test-series platform built around a realistic computer-based test experience, question-bank workflows and performance review.</p>
-              <div class="tag-list"><span>React</span><span>TypeScript</span><span>Supabase</span><span>EdTech</span></div>
-              <a class="project-link" href="https://phynetix.me" target="_blank" rel="noopener noreferrer">Explore PhyNetix <span>↗</span></a>
+        <!-- NAVBAR -->
+
+        <header>
+            <div class="logo">
+                Portfolio.
             </div>
-            <div class="project-visual phy-visual" aria-label="Abstract interface illustration for PhyNetix">
-              <div class="mock-window">
-                <div class="mock-top"><span></span><span></span><span></span><b>PhyNetix / Test Console</b></div>
-                <div class="mock-body"><aside><i></i><i></i><i></i><i></i></aside><div class="mock-content"><div class="mock-label">PHYSICS · SECTION A</div><div class="mock-line long"></div><div class="mock-line medium"></div><div class="mock-options"><span>A</span><span>B</span><span>C</span><span>D</span></div><div class="mock-footer"><span>QUESTION 08 / 30</span><span class="mock-button">Save & Next →</span></div></div></div>
-              </div>
-              <span class="visual-caption">A focused test-taking experience</span>
+
+            <nav>
+                <a href="#" class="active">Home</a>
+                <a href="#about">About</a>
+                <a href="#skills">Skills</a>
+                <a href="#portfolio">Portfolio</a>
+                <a href="#contact">Contact</a>
+            </nav>
+        </header>
+
+
+        <!-- HERO -->
+
+        <section class="hero">
+
+            <div class="hero-text">
+
+                <h3>Hello, It's Me</h3>
+
+                <h1>Adarsh Gupta</h1>
+
+                <h2>
+                    And I'm a
+                    <span class="cyan">Full Stack Developer</span>
+                </h2>
+
+                <p>
+                    I build modern web applications, AI-powered tools,
+                    and scalable digital products. Currently focused on
+                    web development, DSA and AI/ML.
+                </p>
+
+
+                <!-- SOCIAL -->
+
+                <div class="social">
+
+                    <a href="#" target="_blank">
+                        <i class="fa-brands fa-github"></i>
+                    </a>
+
+                    <a href="#" target="_blank">
+                        <i class="fa-brands fa-linkedin-in"></i>
+                    </a>
+
+                    <a href="#" target="_blank">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+
+                    <a href="#" target="_blank">
+                        <i class="fa-brands fa-x-twitter"></i>
+                    </a>
+
+                </div>
+
+
+                <!-- CV -->
+
+                <a href="resume.pdf" class="cv-btn" download>
+                    Download CV
+                </a>
+
             </div>
-          </div>
-          <div class="project-foot"><span>01 — 02</span><span>DESIGNED FOR SERIOUS PRACTICE</span></div>
-        </article>
 
-        <article class="project-card project-shree">
-          <div class="project-number">PROJECT / 02</div>
-          <div class="project-main">
-            <div class="project-copy">
-              <p class="eyebrow">B2B · CRM / ERP</p>
-              <h3>ShreekinOS<span class="project-mark">↗</span></h3>
-              <p class="project-description">Internal software for pharmaceutical field teams — role-based access, reporting hierarchy, attendance and coordinated field visits.</p>
-              <div class="tag-list"><span>React</span><span>PostgreSQL</span><span>RLS</span><span>Edge Functions</span></div>
-              <p class="project-note">Built around real operational workflows, permissions and data boundaries.</p>
+
+            <!-- PROFILE IMAGE -->
+
+            <div class="hero-image">
+
+                <div class="hexagon">
+
+                    <img
+                        src="profile.png"
+                        alt="Adarsh Gupta"
+                    >
+
+                </div>
+
             </div>
-            <div class="project-visual shree-visual" aria-label="Abstract business dashboard illustration">
-              <div class="dashboard">
-                <div class="dash-top"><b>FIELD OPERATIONS</b><span>LIVE OVERVIEW <i></i></span></div>
-                <div class="dash-stats"><div><small>FIELD TEAM</small><strong>128</strong><span>Across territories</span></div><div><small>VISITS TODAY</small><strong>064</strong><span>Team activity</span></div></div>
-                <div class="dash-chart"><div class="chart-head"><b>Weekly activity</b><span>Last 7 days</span></div><div class="chart-bars"><i style="height:34%"></i><i style="height:54%"></i><i style="height:43%"></i><i style="height:76%"></i><i style="height:60%"></i><i style="height:90%"></i><i style="height:68%"></i></div></div>
-                <div class="dash-row"><span><i></i> Attendance overview</span><span>Updated just now ↗</span></div>
-              </div>
-              <span class="visual-caption">Role-aware field operations</span>
-            </div>
-          </div>
-          <div class="project-foot"><span>02 — 02</span><span>SOFTWARE FOR REAL-WORLD TEAMS</span></div>
-        </article>
-      </div>
-    </section>
 
-    <section class="section side-projects-section" id="extras">
-      <div class="section-label"><span>02</span><h2>Beyond the build</h2><p>MORE THAN CODE</p></div>
-      <div class="section-content destination-grid">
-        <a class="destination-card" href="photography.html">
-          <span class="destination-index">PERSONAL ARCHIVE / 01</span>
-          <span class="destination-title">Photography diary <b aria-hidden="true">↗</b></span>
-          <span class="destination-description">A separate space for the places, details and moments I capture through my camera.</span>
-          <span class="destination-link">Explore photographs ↗</span>
-        </a>
-        <a class="destination-card" href="leetcode.html">
-          <span class="destination-index">PROBLEM SOLVING / 02</span>
-          <span class="destination-title">LeetCode progress <b aria-hidden="true">↗</b></span>
-          <span class="destination-description">Track solved problems, difficulty breakdown and activity using a LeetCode username.</span>
-          <span class="destination-link">View coding stats ↗</span>
-        </a>
-      </div>
-    </section>
+        </section>
 
-    <section class="section about-section" id="about">
-      <div class="section-label"><span>03</span><h2>A little about me</h2><p>THE PERSON BEHIND THE BUILD</p></div>
-      <div class="section-content about-content">
-        <p class="about-lede">I like making things that are useful — and understanding how they work, all the way down.</p>
-        <div class="about-columns"><p>I'm a Computer Software Engineering student at IIEST Shibpur, originally from Varanasi. Most of my building time goes into SaaS products: exam tools, business workflows and ideas that make student life easier.</p><p>Alongside shipping projects, I'm working through DSA in C++, backend engineering and cloud fundamentals. Away from my laptop, you'll usually find me with a camera, at the gym or exploring somewhere new.</p></div>
-        <div class="skills-grid"><div><span>01 / LANGUAGES</span><p>C++ · Python · JavaScript · TypeScript · SQL</p></div><div><span>02 / FRONTEND</span><p>React · Vite · Tailwind CSS · shadcn/ui</p></div><div><span>03 / BACKEND</span><p>Supabase · PostgreSQL · RLS · Edge Functions</p></div><div><span>04 / TOOLKIT</span><p>Git · GitHub · Vercel · Linux · Lovable</p></div></div>
-      </div>
-    </section>
+    </div>
 
-    <section class="section learning-section" id="learning">
-      <div class="section-label"><span>04</span><h2>In progress</h2><p>ALWAYS LEARNING</p></div>
-      <div class="section-content learning-list">
-        <article><span class="learning-number">01</span><div><h3>Backend engineering</h3><p>Node.js, Express, SQL, authentication, security, testing and deployment.</p></div><span class="learning-status">BUILDING DEPTH</span></article>
-        <article><span class="learning-number">02</span><div><h3>DSA in C++</h3><p>Striver's A2Z sheet, problem-solving patterns and regular LeetCode practice.</p></div><span class="learning-status">IN PROGRESS</span></article>
-        <article><span class="learning-number">03</span><div><h3>Cloud & AI</h3><p>Google Cloud, Firebase and generative AI applications.</p></div><span class="learning-status">EXPLORING</span></article>
-      </div>
-    </section>
-
-    <section class="section campus-section" id="campus">
-      <div class="section-label"><span>05</span><h2>Beyond the screen</h2><p>CAMPUS & COMMUNITY</p></div>
-      <div class="section-content campus-list">
-        <article><div><h3>ICCHE</h3><span>Students' Outreach Programme · IIEST Shibpur</span></div><p>Volunteering with the institute's social outreach programme, which runs free classes for children living near campus. <a href="https://www.icche.in/" target="_blank" rel="noopener noreferrer">icche.in ↗</a></p></article>
-        <article><div><h3>Catharsis</h3><span>Photographic Society · IIEST Shibpur</span></div><p>Capturing institute events and the everyday details around campus.</p></article>
-      </div>
-    </section>
-
-    <section class="contact-section" id="contact">
-      <div class="contact-top"><span>06 / GET IN TOUCH</span><span>OPEN TO GOOD PROBLEMS</span></div>
-      <h2>Have something<br>worth building<span class="serif-word">?</span></h2>
-      <div class="contact-bottom"><p>Open to projects, hackathon teams and opportunities where I can build, contribute and learn.</p><a href="mailto:adarsh07gupta@gmail.com">adarsh07gupta@gmail.com <span>↗</span></a></div>
-    </section>
-  </main>
-  <footer class="site-footer"><a class="brand" href="#top">AG<span>.</span></a><span>DESIGNED, BUILT & STILL LEARNING.</span><div><a href="https://github.com/adarshgupta162" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href="https://www.linkedin.com/in/adarsh07gupta" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a><a href="#top">Back to top ↑</a></div></footer>
-</div>
-
-<dialog class="photo-lightbox" id="photo-lightbox">
-  <button class="lightbox-close" id="lightbox-close" aria-label="Close photo">×</button>
-  <button class="lightbox-arrow" id="lightbox-prev" aria-label="Previous photo">←</button>
-  <figure><img id="lightbox-image" src="" alt=""><figcaption id="lightbox-caption"></figcaption></figure>
-  <button class="lightbox-arrow" id="lightbox-next" aria-label="Next photo">→</button>
-</dialog>
 </body>
 </html>

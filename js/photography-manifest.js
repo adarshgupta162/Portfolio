@@ -4,4 +4,32 @@ window.PHOTOGRAPHY_CATEGORIES = [
   "streetlife",
   "travel"
 ];
-window.PHOTOGRAPHY_MANIFEST = [];
+window.PHOTOGRAPHY_MANIFEST = [
+  {
+    "title": "Screenshot (1)",
+    "location": "Nature",
+    "category": "nature",
+    "label": "NATURE",
+    "description": "A moment captured by Adarsh.",
+    "src": "photography/nature/Screenshot (1).png",
+    "alt": "Screenshot (1)"
+  },
+  {
+    "title": "Varanasi Street",
+    "location": "Streetlife",
+    "category": "streetlife",
+    "label": "STREETLIFE",
+    "description": "A moment captured by Adarsh.",
+    "src": "photography/streetlife/varanasi-street.png",
+    "alt": "Varanasi Street"
+  },
+  {
+    "title": "Screenshot (1)",
+    "location": "Travel",
+    "category": "travel",
+    "label": "TRAVEL",
+    "description": "A moment captured by Adarsh.",
+    "src": "photography/travel/Screenshot (1).png",
+    "alt": "Screenshot (1)"
+  }
+];

@@ -1,82 +1,152 @@
 (() => {
-  // Replace these sample image URLs and descriptions with your own photographs.
-  // Put local files in assets/ and use paths such as "assets/varanasi-ghat.jpg".
-  const samplePhotos = [
-    { title: "A little further away", location: "Dolomites, Italy", category: "travel", label: "TRAVEL NOTES", description: "A quiet pause beside cold water, with the mountains holding the whole scene still.", src: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1400&q=88", alt: "Mountain landscape under a soft sky" },
-    { title: "Clouds at golden hour", location: "Somewhere above the clouds", category: "nature", label: "OPEN SKIES", description: "The kind of light that makes even an ordinary journey feel cinematic.", src: "https://images.unsplash.com/photo-1476231682828-37e571bc172f?auto=format&fit=crop&w=1400&q=88", alt: "Sunlight falling through a forest" },
-    { title: "Blue, all the way through", location: "Alpine lake", category: "travel", label: "WATER & STONE", description: "A landscape built from reflections, stillness, and the smallest movement.", src: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1400&q=88", alt: "Lake and mountains" },
-    { title: "Little things, noticed", location: "A slow afternoon", category: "details", label: "SMALL DETAILS", description: "Sometimes the details tell you more than the whole picture.", src: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=1400&q=88", alt: "Camera on a table" },
-    { title: "Where the road bends", location: "Mountain country", category: "nature", label: "OUT THERE", description: "A reminder to leave a little room in the plan for the unexpected.", src: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1400&q=88", alt: "Dramatic mountain peaks" },
-    { title: "The city in motion", location: "A passing moment", category: "street", label: "STREET & LIFE", description: "A brief frame from the world moving around me.", src: "https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=1400&q=88", alt: "City lights at dusk" },
-    { title: "Into the quiet", location: "Forest trail", category: "nature", label: "GREEN PAUSES", description: "A little distance from the noise, and a little closer to the present.", src: "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1400&q=88", alt: "Path through a green forest" },
-    { title: "Last light on the water", location: "Evening somewhere", category: "travel", label: "AFTER HOURS", description: "The final minutes of daylight, saved for later.", src: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1400&q=88", alt: "Ocean water at sunset" }
-  ];
-
-  // The build script scans photography/<category>/ and generates this manifest.
-  // Sample images keep the page previewable until personal photos are added.
-  const manifestPhotos = Array.isArray(window.PHOTOGRAPHY_MANIFEST) ? window.PHOTOGRAPHY_MANIFEST : [];
-  const photos = manifestPhotos.length ? manifestPhotos : samplePhotos;
-
   const $ = (selector, root = document) => root.querySelector(selector);
   const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
+  const byId = id => document.getElementById(id);
+
+  function normalizeCategory(value) {
+    return String(value || "").trim().toLowerCase();
+  }
+
+  function normalizeSrc(value) {
+    if (typeof value !== "string") return "";
+    const src = value.trim().replace(/\\/g, "/").replace(/^\.\/+/, "");
+    if (!src) return "";
+    if (/^(https?:|data:|blob:)/i.test(src)) return src;
+    return encodeURI(src);
+  }
+
+  function normalizePhoto(photo) {
+    if (!photo || typeof photo !== "object") return null;
+    const category = normalizeCategory(photo.category);
+    const src = normalizeSrc(photo.src);
+    if (!category || !src) return null;
+    const fallbackTitle = String(photo.title || photo.alt || "Untitled Photograph").trim() || "Untitled Photograph";
+    return {
+      title: fallbackTitle,
+      location: String(photo.location || category.replace(/[-_]+/g, " ")).trim(),
+      category,
+      label: String(photo.label || category.replace(/[-_]+/g, " ").toUpperCase()).trim() || category.toUpperCase(),
+      description: String(photo.description || "A moment captured by Adarsh.").trim(),
+      src,
+      alt: String(photo.alt || fallbackTitle).trim() || fallbackTitle
+    };
+  }
+
+  const status = document.createElement("p");
+  status.className = "gallery-status";
+  status.hidden = true;
+  const filterNav = byId("filters");
+  filterNav.insertAdjacentElement("afterend", status);
+
+  function setStatus(message = "") {
+    status.hidden = !message;
+    status.textContent = message;
+  }
+
+  const rawManifest = window.PHOTOGRAPHY_MANIFEST;
+  const manifestPhotos = Array.isArray(rawManifest) ? rawManifest.map(normalizePhoto).filter(Boolean) : [];
+  if (!Array.isArray(rawManifest)) {
+    setStatus("Gallery data is unavailable. Run the photography manifest build before deploying.");
+  } else if (manifestPhotos.length !== rawManifest.length) {
+    setStatus("Some gallery entries were skipped because of invalid manifest data.");
+  }
+
+  const photos = manifestPhotos;
   let activePhotos = [...photos];
   let activeIndex = 0;
+  let activeFilter = "all";
 
   const pad = n => String(n).padStart(2, "0");
   const getActive = () => activePhotos[activeIndex];
+  const lightbox = byId("lightbox");
+  const visibleCount = byId("visible-count");
+  const featuredImage = byId("featured-image");
+  const featuredCard = byId("open-featured");
+
+  function markImageError(container, image, label) {
+    if (!container || !image) return;
+    container.classList.add("is-broken");
+    image.removeAttribute("src");
+    image.alt = `Image unavailable: ${label}`;
+  }
+
+  function setImage(image, src, alt, container) {
+    if (!image) return;
+    if (container) container.classList.remove("is-broken");
+    image.alt = alt || "Photograph";
+    image.onerror = () => markImageError(container, image, alt || "Photograph");
+    image.src = src;
+  }
 
   function renderStage() {
     if (!activePhotos.length) {
-      $("#featured-title").textContent = "A new collection is coming";
-      $("#featured-location").textContent = "Add photographs to this folder";
-      $("#featured-category").textContent = "COMING SOON";
-      $("#current-index").textContent = "00";
-      $("#total-index").textContent = "00";
-      $("#visible-count").textContent = "00";
-      $$(".stage-card[data-step]").forEach(card => { card.hidden = true; });
-      $("#featured-image").removeAttribute("src");
-      ["#open-featured", "#prev-photo", "#prev-round", "#next-round", "#lightbox-prev", "#lightbox-next"].forEach(selector => { const button = $(selector); if (button) button.disabled = true; });
+      byId("featured-title").textContent = "No photographs in this selection";
+      byId("featured-location").textContent = activeFilter === "all"
+        ? "Add images in photography/<category>/ and rebuild the manifest"
+        : `No images in “${categoryLabel(activeFilter)}” yet`;
+      byId("featured-category").textContent = activeFilter === "all" ? "EMPTY GALLERY" : "EMPTY CATEGORY";
+      byId("current-index").textContent = "00";
+      byId("total-index").textContent = "00";
+      visibleCount.textContent = "00";
+      $$(".stage-card[data-step]").forEach(card => { card.hidden = true; card.classList.remove("is-broken"); });
+      featuredCard.classList.remove("is-broken");
+      featuredImage.removeAttribute("src");
+      [
+        "#open-featured", "#prev-photo", "#prev-round", "#next-round", "#lightbox-prev", "#lightbox-next"
+      ].forEach(selector => {
+        const button = $(selector);
+        if (button) button.disabled = true;
+      });
       return;
     }
-    ["#open-featured", "#prev-photo", "#prev-round", "#next-round", "#lightbox-prev", "#lightbox-next"].forEach(selector => { const button = $(selector); if (button) button.disabled = false; });
-    $$(".stage-card[data-step]").forEach(card => { card.hidden = false; });
+
+    [
+      "#open-featured", "#prev-photo", "#prev-round", "#next-round", "#lightbox-prev", "#lightbox-next"
+    ].forEach(selector => {
+      const button = $(selector);
+      if (button) button.disabled = false;
+    });
+
+    $$(".stage-card[data-step]").forEach(card => { card.hidden = false; card.classList.remove("is-broken"); });
     const current = getActive();
-    $("#featured-image").src = current.src;
-    $("#featured-image").alt = current.alt;
-    $("#featured-title").textContent = current.title;
-    $("#featured-location").textContent = current.location;
-    $("#featured-category").textContent = current.label;
-    $("#current-index").textContent = pad(activeIndex + 1);
-    $("#total-index").textContent = pad(activePhotos.length);
-    $("#visible-count").textContent = pad(activePhotos.length);
+    setImage(featuredImage, current.src, current.alt, featuredCard);
+    byId("featured-title").textContent = current.title;
+    byId("featured-location").textContent = current.location;
+    byId("featured-category").textContent = current.label;
+    byId("current-index").textContent = pad(activeIndex + 1);
+    byId("total-index").textContent = pad(activePhotos.length);
+    visibleCount.textContent = pad(activePhotos.length);
 
     $$(".stage-card[data-step]").forEach(card => {
       const step = Number(card.dataset.step);
       const photo = activePhotos[(activeIndex + step + activePhotos.length) % activePhotos.length];
-      card.querySelector("img").src = photo.src;
-      card.querySelector("img").alt = photo.alt;
+      const image = card.querySelector("img");
+      setImage(image, photo.src, photo.alt, card);
       card.querySelector(".card-index").textContent = pad((activeIndex + step + activePhotos.length) % activePhotos.length + 1);
       card.hidden = activePhotos.length < 3;
     });
   }
 
   function renderGrid() {
-    const grid = $("#photo-grid");
+    const grid = byId("photo-grid");
     grid.replaceChildren();
     if (!activePhotos.length) {
       const empty = document.createElement("p");
       empty.className = "gallery-empty";
-      empty.textContent = "No photographs here yet. Add images to this folder and rebuild the gallery.";
+      empty.textContent = activeFilter === "all"
+        ? "No photographs found. Add supported images under photography/<category>/ and rebuild."
+        : `No photographs in “${categoryLabel(activeFilter)}” yet.`;
       grid.append(empty);
       return;
     }
+
     activePhotos.forEach((photo, i) => {
       const button = document.createElement("button");
       button.type = "button";
       button.className = "photo-tile";
-      button.innerHTML = `<img loading="lazy" alt=""><span class="tile-meta"><small></small><strong></strong><span></span></span>`;
-      $("img", button).src = photo.src;
-      $("img", button).alt = photo.alt;
+      button.innerHTML = `<img loading="lazy" decoding="async" alt=""><span class="tile-meta"><small></small><strong></strong><span></span></span>`;
+      const image = $("img", button);
+      setImage(image, photo.src, photo.alt, button);
       $("small", button).textContent = photo.label;
       $("strong", button).textContent = photo.title;
       $(".tile-meta span", button).textContent = photo.location;
@@ -90,46 +160,51 @@
     activeIndex = (index + activePhotos.length) % activePhotos.length;
     renderStage();
   }
-  function step(amount) { if (activePhotos.length) setIndex(activeIndex + amount); }
 
-  const lightbox = $("#lightbox");
+  function step(amount) {
+    if (activePhotos.length) setIndex(activeIndex + amount);
+  }
+
   function openLightbox(index) {
+    if (!activePhotos.length) return;
     activeIndex = index;
     updateLightbox();
     if (!lightbox.open) lightbox.showModal();
     renderStage();
   }
+
   function updateLightbox() {
     const photo = getActive();
-    $("#lightbox-image").src = photo.src;
-    $("#lightbox-image").alt = photo.alt;
-    $("#lightbox-title").textContent = photo.title;
-    $("#lightbox-location").textContent = `${photo.label} · ${photo.location}`;
-    $("#lightbox-description").textContent = photo.description;
+    const image = byId("lightbox-image");
+    setImage(image, photo.src, photo.alt, image.closest("figure"));
+    byId("lightbox-title").textContent = photo.title;
+    byId("lightbox-location").textContent = `${photo.label} · ${photo.location}`;
+    byId("lightbox-description").textContent = photo.description;
   }
+
   function lightboxStep(amount) {
     step(amount);
     updateLightbox();
   }
 
-  $("#prev-photo").addEventListener("click", () => step(-1));
-  $("#next-round").addEventListener("click", () => step(1));
-  $("#prev-round").addEventListener("click", () => step(-1));
-  $("#open-featured").addEventListener("click", () => openLightbox(activeIndex));
+  byId("prev-photo").addEventListener("click", () => step(-1));
+  byId("next-round").addEventListener("click", () => step(1));
+  byId("prev-round").addEventListener("click", () => step(-1));
+  byId("open-featured").addEventListener("click", () => openLightbox(activeIndex));
   $$(".stage-card[data-step]").forEach(card => card.addEventListener("click", () => step(Number(card.dataset.step))));
-  $("#close-lightbox").addEventListener("click", () => lightbox.close());
-  $("#lightbox-prev").addEventListener("click", () => lightboxStep(-1));
-  $("#lightbox-next").addEventListener("click", () => lightboxStep(1));
+  byId("close-lightbox").addEventListener("click", () => lightbox.close());
+  byId("lightbox-prev").addEventListener("click", () => lightboxStep(-1));
+  byId("lightbox-next").addEventListener("click", () => lightboxStep(1));
   lightbox.addEventListener("click", event => { if (event.target === lightbox) lightbox.close(); });
   document.addEventListener("keydown", event => {
     if (event.key === "ArrowRight") lightbox.open ? lightboxStep(1) : step(1);
     if (event.key === "ArrowLeft") lightbox.open ? lightboxStep(-1) : step(-1);
   });
 
-  const filterNav = $("#filters");
   const filterSpacer = filterNav.querySelector(".filter-spacer");
-  const filterCount = filterNav.querySelector(".gallery-count");
-  const manifestCategories = Array.isArray(window.PHOTOGRAPHY_CATEGORIES) ? window.PHOTOGRAPHY_CATEGORIES : [];
+  const manifestCategories = Array.isArray(window.PHOTOGRAPHY_CATEGORIES)
+    ? window.PHOTOGRAPHY_CATEGORIES.map(normalizeCategory).filter(Boolean)
+    : [];
   const categories = [...new Set([...manifestCategories, ...photos.map(photo => photo.category).filter(Boolean)])]
     .sort((a, b) => a.localeCompare(b));
 
@@ -139,6 +214,7 @@
   }
 
   function applyFilter(filter, button) {
+    activeFilter = filter;
     $$(".filter-chip", filterNav).forEach(chip => chip.classList.toggle("is-active", chip === button));
     activePhotos = filter === "all" ? [...photos] : photos.filter(photo => photo.category === filter);
     activeIndex = 0;
@@ -146,7 +222,6 @@
     renderGrid();
   }
 
-  // Create one filter per actual folder/category, so new folders appear after rebuilding.
   filterNav.querySelectorAll(".filter-chip").forEach(button => button.remove());
   const allButton = document.createElement("button");
   allButton.type = "button";
@@ -166,7 +241,7 @@
     button.addEventListener("click", () => applyFilter(category, button));
   });
 
-  $("#year").textContent = new Date().getFullYear();
+  byId("year").textContent = new Date().getFullYear();
   renderStage();
   renderGrid();
 })();

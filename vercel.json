@@ -1,0 +1,7 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "python3 scripts/build_photography.py && python3 scripts/validate_photography.py",
+  "outputDirectory": ".",
+  "installCommand": "echo 'no install step'",
+  "cleanUrls": false
+}

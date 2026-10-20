@@ -26,8 +26,12 @@ jobs:
           python-version: '3.x'
       - name: Generate photography manifest
         run: python scripts/build_photography.py
+      - name: Validate photography gallery assets
+        run: python scripts/validate_photography.py
       - name: Configure Pages
         uses: actions/configure-pages@v5
+        with:
+          enablement: true
       - name: Upload site
         uses: actions/upload-pages-artifact@v3
         with:

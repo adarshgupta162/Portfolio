@@ -35,6 +35,15 @@ def title_from_filename(name: str) -> str:
 photos = []
 categories = set()
 if PHOTO_ROOT.exists():
+    categories.update(
+        sorted(
+            {
+                folder.relative_to(PHOTO_ROOT).parts[0].lower()
+                for folder in PHOTO_ROOT.iterdir()
+                if folder.is_dir() and not folder.name.startswith(".")
+            }
+        )
+    )
     images = sorted(
         (
             path

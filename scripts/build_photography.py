@@ -15,15 +15,18 @@ def is_hidden(relative_path: Path) -> bool:
 
 
 def normalized_category(relative_path: Path) -> str:
-    return relative_path.parts[0].lower() if relative_path.parts else "uncategorized"
+    parent = relative_path.parent
+    if not parent or parent == Path("."):
+        return "uncategorized"
+    return parent.as_posix().lower()
 
 
 def category_label(category: str) -> str:
-    return category.replace("-", " ").replace("_", " ").upper()
+    return category.replace("/", " / ").replace("-", " ").replace("_", " ").upper()
 
 
 def category_location(category: str) -> str:
-    return category.replace("-", " ").replace("_", " ").title()
+    return category.replace("/", " / ").replace("-", " ").replace("_", " ").title()
 
 
 def title_from_filename(name: str) -> str:
@@ -35,6 +38,21 @@ def title_from_filename(name: str) -> str:
 photos = []
 categories = set()
 if PHOTO_ROOT.exists():
+    for folder in sorted(
+        (
+            path
+            for path in PHOTO_ROOT.rglob("*")
+            if path.is_dir()
+        ),
+        key=lambda path: path.relative_to(PHOTO_ROOT).as_posix().casefold(),
+    ):
+        relative_folder = folder.relative_to(PHOTO_ROOT)
+        if is_hidden(relative_folder):
+            continue
+        if relative_folder == Path("."):
+            continue
+        categories.add(relative_folder.as_posix().lower())
+
     images = sorted(
         (
             path

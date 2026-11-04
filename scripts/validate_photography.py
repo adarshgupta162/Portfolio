@@ -38,7 +38,7 @@ def run_manifest_build() -> None:
     ok("Manifest generator runs successfully")
 
 
-def parse_manifest() -> list[dict]:
+def parse_manifest() -> tuple[list[str], list[dict]]:
     text = MANIFEST_JS.read_text(encoding="utf-8")
     categories_match = re.search(r"window\.PHOTOGRAPHY_CATEGORIES\s*=\s*(\[.*?\])\s*;", text, re.S)
     manifest_match = re.search(r"window\.PHOTOGRAPHY_MANIFEST\s*=\s*(\[.*\])\s*;", text, re.S)
@@ -52,7 +52,7 @@ def parse_manifest() -> list[dict]:
     if not isinstance(categories, list) or not isinstance(photos, list):
         fail("Manifest payloads must both be arrays")
     ok("Manifest JS payloads are valid JSON arrays")
-    return photos
+    return categories, photos
 
 
 def check_manifest_syntax_with_node() -> None:
@@ -83,6 +83,33 @@ def check_manifest_paths(photos: list[dict]) -> None:
             fail(f"Duplicate manifest src detected: {src}")
         seen.add(src)
     ok("All manifest image paths exist in the repository and are unique")
+
+
+def check_categories_covered(categories: list[str], photos: list[dict]) -> None:
+    seen = set()
+    for folder in ROOT.joinpath("photography").rglob("*"):
+        if not folder.is_dir():
+            continue
+        relative_folder = folder.relative_to(ROOT.joinpath("photography"))
+        if relative_folder == Path("."):
+            continue
+        if any(part.startswith(".") for part in relative_folder.parts):
+            continue
+        seen.add(relative_folder.as_posix().lower())
+
+    manifest_categories = {str(category).strip().lower() for category in categories if str(category).strip()}
+    missing = sorted(seen - manifest_categories)
+    if missing:
+        fail(f"Manifest categories missing folders: {', '.join(missing)}")
+
+    photo_categories = {str(item.get('category', '')).strip().lower() for item in photos if isinstance(item, dict)}
+    uncategorized_used = any(category == "uncategorized" for category in photo_categories)
+    if uncategorized_used and "uncategorized" not in manifest_categories:
+        fail("Manifest is missing 'uncategorized' category for root-level photography images")
+    if not photo_categories.issubset(manifest_categories):
+        extras = sorted(photo_categories - manifest_categories)
+        fail(f"Manifest photos reference categories not listed in PHOTOGRAPHY_CATEGORIES: {', '.join(extras)}")
+    ok("Manifest categories cover all gallery folders (including empty folders)")
 
 
 def check_html_references() -> None:
@@ -116,9 +143,10 @@ def check_workflow_requirements() -> None:
 
 def main() -> None:
     run_manifest_build()
-    photos = parse_manifest()
+    categories, photos = parse_manifest()
     check_manifest_syntax_with_node()
     check_manifest_paths(photos)
+    check_categories_covered(categories, photos)
     check_html_references()
     check_workflow_requirements()
     print("[OK] Photography validation completed")

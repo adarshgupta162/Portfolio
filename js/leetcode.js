@@ -6,7 +6,7 @@
   const username = 'adarshgupta162';
   const endpoint = 'https://proxy.cors.dev/https://leetcode.com/graphql';
   const CACHE_KEY = `leetcode-public-stats:${username.toLowerCase()}`;
-  const CACHE_TTL = 30 * 60 * 1000;
+  const CACHE_TTL = 60 * 1000;
   const $ = (id) => document.getElementById(id);
   const first = (...values) => values.find((v) => v !== undefined && v !== null && v !== '');
   const fmt = (value) => Number.isFinite(Number(value)) ? Number(value).toLocaleString('en-IN') : '—';
@@ -157,7 +157,7 @@
       try {
         render(cached.data);
         setText('last-updated', `CACHED · ${new Date(cached.savedAt).toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' })}`);
-        if (status) { status.classList.remove('is-error'); status.textContent = 'Loaded instantly from a 30-minute cache. Refresh for the latest stats.'; }
+        if (status) { status.classList.remove('is-error'); status.textContent = 'Loaded instantly from a 1-minute cache. Refresh for the latest stats.'; }
         return;
       } catch { /* Invalid cached data: fetch a fresh profile. */ }
     }
@@ -169,7 +169,7 @@
       const data = await fetchStats();
       render(data);
       setText('last-updated', `UPDATED · ${new Date().toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' })}`);
-      if (status) status.textContent = 'Connected · one request fetched your public LeetCode stats. Cached for 30 minutes.';
+      if (status) status.textContent = 'Connected · one request fetched your public LeetCode stats. Cached for 1 minute.';
     } catch (error) {
       if (cached) {
         try {

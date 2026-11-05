@@ -32,7 +32,6 @@
       userContestRanking(username: $username) {
         rating globalRanking attendedContestsCount topPercentage
       }
-      allQuestionsCount { difficulty count }
     }
   `;
 
@@ -72,7 +71,6 @@
     setText('leetcode-rank', rank > 0 ? `GLOBAL RANK #${fmt(rank)}` : 'PUBLIC PROFILE');
 
     const solved = indexCounts(user.submitStats?.acSubmissionNum);
-    const totals = indexCounts(data.allQuestionsCount);
     const easy = solved.Easy || 0;
     const medium = solved.Medium || 0;
     const hard = solved.Hard || 0;
@@ -83,15 +81,6 @@
     setText('medium-solved', fmt(medium));
     setText('hard-solved', fmt(hard));
     setText('solved-caption', 'Problems completed');
-    setText('easy-total', totals.Easy ? `of ${fmt(totals.Easy)} problems` : 'Solved problems');
-    setText('medium-total', totals.Medium ? `of ${fmt(totals.Medium)} problems` : 'Solved problems');
-    setText('hard-total', totals.Hard ? `of ${fmt(totals.Hard)} problems` : 'Solved problems');
-    setBar('easy-progress', easy, totals.Easy);
-    setBar('medium-progress', medium, totals.Medium);
-    setBar('hard-progress', hard, totals.Hard);
-    setPct('easy-percent', easy, totals.Easy);
-    setPct('medium-percent', medium, totals.Medium);
-    setPct('hard-percent', hard, totals.Hard);
 
     const contest = data.userContestRanking;
     setText('contest-rating', contest ? fmt(Math.round(contest.rating)) : '—');

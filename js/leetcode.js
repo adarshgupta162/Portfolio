@@ -25,7 +25,7 @@
   const query = `
     query PortfolioLeetCodeStats($username: String!) {
       matchedUser(username: $username) {
-        profile { ranking }
+        profile { ranking userAvatar realName }
         submitStats { acSubmissionNum { difficulty count } }
         userCalendar { streak totalActiveDays submissionCalendar }
       }
@@ -55,6 +55,21 @@
   function render(data) {
     const user = data?.matchedUser;
     if (!user) throw new Error('LeetCode username was not found or its public profile is unavailable.');
+
+    const avatar = user.profile?.userAvatar;
+    const avatarImage = $('leetcode-avatar-image');
+    const avatarFallback = $('leetcode-avatar-fallback');
+    if (avatarImage && avatar && /^https:\/\//i.test(avatar)) {
+      avatarImage.src = avatar;
+      avatarImage.hidden = false;
+      if (avatarFallback) avatarFallback.hidden = true;
+      avatarImage.onerror = () => { avatarImage.hidden = true; if (avatarFallback) avatarFallback.hidden = false; };
+    } else if (avatarImage) {
+      avatarImage.hidden = true;
+      if (avatarFallback) avatarFallback.hidden = false;
+    }
+    const rank = Number(user.profile?.ranking);
+    setText('leetcode-rank', rank > 0 ? `GLOBAL RANK #${fmt(rank)}` : 'PUBLIC PROFILE');
 
     const solved = indexCounts(user.submitStats?.acSubmissionNum);
     const totals = indexCounts(data.allQuestionsCount);

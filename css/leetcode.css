@@ -56,3 +56,14 @@
 .leetcode-avatar span{display:grid;place-items:center;width:100%;height:100%;color:#fff;font:800 1.25rem var(--display)}
 .leetcode-rank{display:inline-flex;align-items:center;justify-content:center;margin-top:14px;padding:6px 10px;border:1px solid var(--line);background:#f5f6f8;color:var(--blue);font:500 .58rem var(--mono);letter-spacing:.06em}
 @media(max-width:440px){.leetcode-avatar{width:64px;height:64px;flex-basis:64px}}
+
+/* Keep the LeetCode identity and avatar aligned without overlapping stats. */
+.leetcode-profile-line{display:flex!important;flex-wrap:nowrap!important;align-items:center!important;justify-content:space-between!important;gap:24px!important;min-height:112px}
+.leetcode-identity{flex:1 1 auto;min-width:0}
+.leetcode-identity .eyebrow{margin-top:0}
+.leetcode-identity h2{overflow-wrap:anywhere}
+.leetcode-avatar{display:block!important;box-sizing:border-box!important;width:88px!important;height:88px!important;min-width:88px!important;min-height:88px!important;flex:0 0 88px!important;border-radius:50%!important;overflow:hidden!important;padding:0!important;margin:0!important;aspect-ratio:1/1!important}
+.leetcode-avatar img{display:block!important;width:100%!important;height:100%!important;max-width:none!important;max-height:none!important;aspect-ratio:1/1!important;object-fit:cover!important;border-radius:50%!important}
+.leetcode-avatar span{position:absolute;inset:0;border-radius:50%;display:grid;place-items:center}
+.leetcode-rank{width:max-content;max-width:100%;margin-top:12px!important;white-space:nowrap}
+@media(max-width:440px){.leetcode-profile-line{gap:14px!important;min-height:90px}.leetcode-avatar{width:68px!important;height:68px!important;min-width:68px!important;min-height:68px!important;flex-basis:68px!important}.leetcode-rank{font-size:.52rem!important}}
